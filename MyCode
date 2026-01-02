@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANAN Store - متجر المجات الأنيقة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f0eb 0%, #e8dfd6 100%);
+            color: #4a3728;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #8b6f47 0%, #6b5638 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .intro {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 2px solid #d4b896;
+        }
+
+        .intro h2 {
+            color: #8b6f47;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            color: #8b6f47;
+            border: 2px solid #8b6f47;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #8b6f47 0%, #6b5638 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            text-align: center;
+            color: #8b6f47;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #d4b896;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 3px solid #d4b896;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(139,111,71,0.3);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            color: #6b5638;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .product-info p {
+            color: #8b6f47;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            color: #8b6f47;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-cheap {
+            background: #90ee90;
+            color: #2d5016;
+        }
+
+        .badge-medium {
+            background: #ffd700;
+            color: #8b6f00;
+        }
+
+        .badge-premium {
+            background: #ff6b9d;
+            color: #8b0038;
+        }
+
+        .order-btn {
+            background: linear-gradient(135deg, #8b6f47 0%, #6b5638 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(139,111,71,0.3);
+        }
+
+        .order-btn:hover {
+            background: linear-gradient(135deg, #6b5638 0%, #5a4729 100%);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(139,111,71,0.4);
+        }
+
+        .upload-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .upload-note h3 {
+            color: #8b6f00;
+            margin-bottom: 0.5rem;
+        }
+
+        .shipping-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border: 2px solid #d4b896;
+        }
+
+        .shipping-info h2 {
+            color: #8b6f47;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .shipping-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .shipping-info li {
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: #f5f0eb;
+            border-radius: 8px;
+            border-right: 4px solid #8b6f47;
+        }
+
+        .shipping-info li::before {
+            content: "✓ ";
+            color: #8b6f47;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, #8b6f47 0%, #6b5638 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .contact h2 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .contact a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .contact a:hover {
+            background: white;
+            color: #8b6f47;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #6b5638;
+            color: white;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>☕ BANAN Store ☕</h1>
+        <p>مجات أنيقة لكل الأذواق</p>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>مرحباً بك في متجرنا</h2>
+            <p>نقدم لك مجموعة مميزة من المجات والأكواب بتصاميم عصرية وكلاسيكية، مصنوعة بجودة عالية لتستمتع بمشروبك المفضل بأسلوب راقي</p>
+        </div>
+
+        <div class="upload-note">
+            <h3>📸 ملاحظة مهمة</h3>
+            <p>الصور أدناه عينات توضيحية. لإضافة صورك الحقيقية، ارفع صور المجات على موقع مثل <strong>ImgBB</strong> أو <strong>Imgur</strong> وضع روابطها في الكود</p>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="showAll()">كل المنتجات</button>
+            <button class="filter-btn" onclick="filterByPrice('cheap')">25-30 ₪</button>
+            <button class="filter-btn" onclick="filterByPrice('medium')">31-40 ₪</button>
+            <button class="filter-btn" onclick="filterByPrice('premium')">41-50 ₪</button>
+        </div>
+
+        <!-- الفئة الأولى: 25-30 شيكل -->
+        <div class="category-section" id="cheap-section">
+            <div class="category-title">💚 الفئة الاقتصادية (25-30 ₪)</div>
+            <div class="products">
+                <div class="product-card" data-category="cheap">
+                    <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop" alt="مج كرتوني وردي" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-cheap">اقتصادي</span>
+                        <h3>مج كرتوني وردي كيوت</h3>
+                        <p>تصميم كرتوني لطيف بوجه مبتسم، مثالي للهدايا</p>
+                        <div class="price">25 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج كرتوني وردي - 25 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="cheap">
+                    <img src="https://images.unsplash.com/photo-1517256673644-36ad11246d21?w=400&h=400&fit=crop" alt="مج أزرق كيوت" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-cheap">اقتصادي</span>
+                        <h3>مج أزرق بوجه كيوت</h3>
+                        <p>تصميم أزرق سماوي مع غمازات، كيوت وعملي</p>
+                        <div class="price">28 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج أزرق كيوت - 28 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفئة الثانية: 31-40 شيكل -->
+        <div class="category-section" id="medium-section">
+            <div class="category-title">💛 الفئة المتوسطة (31-40 ₪)</div>
+            <div class="products">
+                <div class="product-card" data-category="medium">
+                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=400&fit=crop" alt="مج كلاسيكي بالورود" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-medium">متوسط</span>
+                        <h3>مج كلاسيكي بنقشات الكرز</h3>
+                        <p>تصميم أنيق بكرز وردي مع صحن متناسق</p>
+                        <div class="price">32 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج كلاسيكي بالكرز - 32 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="medium">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop" alt="مج بتصميم كلب" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-medium">متوسط</span>
+                        <h3>مج بتصميم كلب لطيف</h3>
+                        <p>مج بتصميم كلب أزرق مع صحن مخطط</p>
+                        <div class="price">35 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج الكلب اللطيف - 35 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="medium">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=400&fit=crop" alt="مج بنقشات زهور" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-medium">متوسط</span>
+                        <h3>مج بنقشات الزهور الوردية</h3>
+                        <p>تصميم رومانسي بزهور صغيرة وصحن كريمي</p>
+                        <div class="price">38 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج الزهور الوردية - 38 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="medium">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=400&fit=crop" alt="مج السحاب الأزرق" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-medium">متوسط</span>
+                        <h3>مج السحاب الأزرق</h3>
+                        <p>تصميم سماوي بسحب بيضاء ثلاثية الأبعاد</p>
+                        <div class="price">35 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج السحاب - 35 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفئة الثالثة: 41-50 شيكل -->
+        <div class="category-section" id="premium-section">
+            <div class="category-title">💖 الفئة المميزة (41-50 ₪)</div>
+            <div class="products">
+                <div class="product-card" data-category="premium">
+                    <img src="https://images.unsplash.com/photo-1571867424488-4565932edb41?w=400&h=400&fit=crop" alt="مج الفراشات" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-premium">مميز</span>
+                        <h3>مج مميز بفراشات 3D</h3>
+                        <p>تصميم راقي بفراشات بارزة ثلاثية الأبعاد</p>
+                        <div class="price">45 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج الفراشات 3D - 45 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="premium">
+                    <img src="https://images.unsplash.com/photo-1502741126161-b048400d085d?w=400&h=400&fit=crop" alt="مج القلوب الرومانسي" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-premium">مميز</span>
+                        <h3>مج القلوب الرومانسي</h3>
+                        <p>شكل قلب فريد مع صحن متناسق، مثالي للهدايا</p>
+                        <div class="price">42 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج القلوب - 42 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="premium">
+                    <img src="https://images.unsplash.com/photo-1583225214464-9296029427aa?w=400&h=400&fit=crop" alt="مج الباندا" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-premium">مميز</span>
+                        <h3>مج الباندا المميز</h3>
+                        <p>تصميم فاخر بباندا على خلفية مخططة خضراء</p>
+                        <div class="price">48 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج الباندا - 48 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="premium">
+                    <img src="https://images.unsplash.com/photo-1587080413959-06b859fb107d?w=400&h=400&fit=crop" alt="مج الهالوين" class="product-img">
+                    <div class="product-info">
+                        <span class="badge badge-premium">مميز</span>
+                        <h3>مج الشبح الكيوت</h3>
+                        <p>تصميم مميز بشبح أبيض ويقطين برتقالي</p>
+                        <div class="price">50 ₪</div>
+                        <a href="https://wa.me/972569541101?text=مرحبا، بدي أطلب مج الشبح الكيوت - 50 شيكل" class="order-btn">اطلب الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shipping-info">
+            <h2>معلومات التوصيل والاستلام</h2>
+            <ul>
+                <li>التوصيل متوفر لكل مدن وقرى فلسطين</li>
+                <li>نقطة استلام مجانية في جامعة بيرزيت</li>
+                <li>الدفع عند الاستلام</li>
+                <li>جودة عالية مضمونة 100%</li>
+                <li>تغليف أنيق وآمن</li>
+            </ul>
+        </div>
+
+        <div class="contact">
+            <h2>للطلب والاستفسار</h2>
+            <p>تواصل معنا عبر الواتساب</p>
+            <a href="https://wa.me/972569541101?text=مرحبا، بدي استفسر عن المجات">📱 0569541101</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 BANAN Store - جميع الحقوق محفوظة</p>
+        <p>صُنع بحب في فلسطين 🇵🇸</p>
+    </footer>
+
+    <script>
+        function filterByPrice(category) {
+            const sections = document.querySelectorAll('.category-section');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            document.getElementById(category + '-section').style.display = 'block';
+        }
+
+        function showAll() {
+            const sections = document.querySelectorAll('.category-section');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttons[0].classList.add('active');
+            
+            sections.forEach(section => {
+                section.style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>
