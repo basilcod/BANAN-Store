@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="متجر بنان - BANAN Store | تشكيلة مميزة من المجات والأكواب في فلسطين. تسوق الآن!">
+    <meta name="description" content="متجر بنان - BANAN Store | تشكيلة مميزة من المجات والأكواب في فلسطين.">
     
     <meta property="og:title" content="متجر بنان للمجات المميزة">
     <meta property="og:description" content="أجمل التصاميم العصرية والكلاسيكية، توصيل لكل فلسطين.">
-    <meta property="og:image" content="mugs/jpeg (1).jpeg"> <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
+    <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
     
     <title>BANAN Store - متجر بنان</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,7 +34,7 @@
             --border: #444;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.3s, color 0.3s, transform 0.2s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.3s, color 0.3s; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 80px; }
         
         /* === الهيدر === */
@@ -90,17 +90,15 @@
         }
         .add-cart-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* أيقونة المفضلة */
+        /* أيقونة المفضلة والشارات */
         .wishlist-icon {
             position: absolute; top: 10px; left: 10px;
             background: rgba(255,255,255,0.8); width: 35px; height: 35px;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
             cursor: pointer; color: #ccc; font-size: 1.2rem; transition: 0.3s; z-index: 5;
         }
-        .wishlist-icon:hover { transform: scale(1.1); }
         .wishlist-icon.active { color: var(--danger); }
 
-        /* الشارات */
         .badge { position: absolute; top: 10px; right: 10px; padding: 4px 8px; border-radius: 8px; color: white; font-size: 0.75rem; font-weight: bold; z-index: 5; }
         .badge-cheap { background-color: var(--success); }
         .badge-medium { background-color: #f39c12; }
@@ -115,7 +113,6 @@
             font-size: 24px; cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 999;
         }
-        .cart-float:hover { transform: scale(1.1) rotate(-10deg); }
         .cart-count {
             position: absolute; top: -5px; right: -5px;
             background: var(--danger); color: white;
@@ -133,10 +130,8 @@
             background: var(--card-bg); width: 90%; max-width: 450px;
             padding: 25px; border-radius: 15px; position: relative;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: popIn 0.3s ease-out;
+            max-height: 90vh; overflow-y: auto;
         }
-        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--text); }
         
         /* عناصر السلة */
@@ -145,28 +140,21 @@
         .item-details { flex: 1; }
         .item-controls button { width: 25px; height: 25px; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; }
         
-        /* نموذج الطلب */
-        .form-group { margin-bottom: 15px; text-align: right; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border);
-            background: var(--bg); color: var(--text); outline: none;
-        }
-        
         .checkout-btn {
             display: block; width: 100%; background: var(--success); color: white;
             text-align: center; padding: 12px; border-radius: 10px; border: none;
             font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 15px;
         }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
 
         /* === الإشعارات (Toast) === */
         .toast {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
             background: rgba(0,0,0,0.8); color: white; padding: 10px 20px;
             border-radius: 30px; z-index: 2000; display: none; align-items: center; gap: 10px;
-            animation: slideDown 0.3s ease-out;
         }
-        @keyframes slideDown { from { top: -50px; } to { top: 20px; } }
 
         /* Lightbox */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
@@ -200,7 +188,9 @@
             <button class="filter-btn fav-btn" onclick="filterByCategory('wishlist')"><i class="fas fa-heart"></i> المفضلة</button>
         </div>
 
-        <div class="products-grid" id="productsContainer"></div>
+        <div class="products-grid" id="productsContainer">
+            <p style="text-align:center; width:100%; grid-column: 1/-1;">جاري تحميل المنتجات من قاعدة البيانات...</p>
+        </div>
     </div>
 
     <div class="cart-float" onclick="openCartModal()">
@@ -212,9 +202,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
             <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">🛒 سلة المشتريات</h3>
-            
             <div id="cartItems" style="max-height: 300px; overflow-y: auto;"></div>
-            
             <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px;">
                 <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px;">
                     <span>المجموع:</span>
@@ -229,7 +217,6 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
             <h3 style="text-align: center; margin-bottom: 20px;">📦 معلومات التوصيل</h3>
-            
             <div class="form-group">
                 <label>الاسم الكريم:</label>
                 <input type="text" id="custName" placeholder="مثال: أحمد محمد">
@@ -242,7 +229,6 @@
                 <label>رقم جوال للتواصل:</label>
                 <input type="tel" id="custPhone" placeholder="059xxxxxxx">
             </div>
-            
             <button class="checkout-btn" onclick="sendWhatsApp()">
                 <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
             </button>
@@ -258,35 +244,48 @@
     </footer>
 
     <script>
-        /* ================= بيانات المنتجات ================= */
-        const products = [
-            { id: 1, name: "مج رقم 1", price: 25, category: "cheap", img: "mugs/jpeg (1).jpeg" },
-            { id: 2, name: "مج رقم 2", price: 28, category: "cheap", img: "mugs/jpeg (2).jpeg" },
-            { id: 3, name: "مج رقم 3", price: 30, category: "cheap", img: "mugs/jpeg (3).jpeg" },
-            { id: 12, name: "مج رقم 12", price: 25, category: "cheap", img: "mugs/jpeg (12).jpeg" },
-            { id: 13, name: "مج رقم 13", price: 25, category: "cheap", img: "mugs/jpeg (13).jpeg" },
-            { id: 4, name: "مج رقم 4", price: 35, category: "medium", img: "mugs/jpeg (4).jpeg" },
-            { id: 5, name: "مج رقم 5", price: 35, category: "medium", img: "mugs/jpeg (5).jpeg" },
-            { id: 6, name: "مج رقم 6", price: 38, category: "medium", img: "mugs/jpeg (6).jpeg" },
-            { id: 7, name: "مج رقم 7", price: 32, category: "medium", img: "mugs/jpeg (7).jpeg" },
-            { id: 14, name: "مج رقم 14", price: 35, category: "medium", img: "mugs/jpeg (14).jpeg" },
-            { id: 15, name: "مج رقم 15", price: 35, category: "medium", img: "mugs/jpeg (15).jpeg" },
-            { id: 8, name: "مج رقم 8", price: 45, category: "premium", img: "mugs/jpeg (8).jpeg" },
-            { id: 9, name: "مج رقم 9", price: 42, category: "premium", img: "mugs/jpeg (9).jpeg" },
-            { id: 10, name: "مج رقم 10", price: 50, category: "premium", img: "mugs/jpeg (10).jpeg" },
-            { id: 11, name: "مج رقم 11", price: 45, category: "premium", img: "mugs/jpeg (11).jpeg" },
-            { id: 16, name: "مج رقم 16", price: 45, category: "premium", img: "mugs/jpeg (16).jpeg" },
-            { id: 17, name: "مج رقم 17", price: 50, category: "premium", img: "mugs/jpeg (17).jpeg" }
-        ];
+        /* ================= إعدادات جوجل شيت ================= */
+        // هذا هو الرابط الذي أرسلته أنت، مربوط تلقائياً الآن
+        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
 
-        /* ================= تهيئة البيانات ================= */
+        /* ================= المتغيرات العامة ================= */
         let cart = JSON.parse(localStorage.getItem('bananCart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('bananWishlist')) || [];
+        let products = [];
         let currentCategory = 'all';
-
         const container = document.getElementById('productsContainer');
-        
-        /* ================= العرض والفلترة ================= */
+
+        /* ================= دالة جلب البيانات ================= */
+        async function fetchProducts() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                
+                // تحويل CSV إلى JSON
+                const rows = data.split('\n').slice(1); // تجاهل سطر العناوين
+                products = rows.map(row => {
+                    // نستخدم تعبير نمطي بسيط للفصل بالفواصل مع تجاهل الفواصل داخل علامات التنصيص (إذا وجدت)
+                    // للتبسيط سنستخدم split عادي، لكن تأكد أن لا تستخدم فواصل (،) داخل أسماء المنتجات في جوجل شيت
+                    const col = row.split(',');
+                    if(col.length >= 5) {
+                        return {
+                            id: col[0].trim(),
+                            name: col[1].trim(),
+                            price: Number(col[2].trim()),
+                            category: col[3].trim(),
+                            img: col[4].trim()
+                        };
+                    }
+                }).filter(p => p); // تصفية الأسطر الفارغة
+
+                renderProducts(products);
+            } catch (error) {
+                console.error("Error:", error);
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:red;">حدث خطأ في تحميل البيانات. يرجى التأكد من الإنترنت.</p>';
+            }
+        }
+
+        /* ================= دوال العرض ================= */
         function renderProducts(list) {
             container.innerHTML = '';
             if(list.length === 0) {
@@ -297,21 +296,19 @@
             list.forEach(p => {
                 let badgeClass = p.category === 'cheap' ? 'badge-cheap' : p.category === 'medium' ? 'badge-medium' : 'badge-premium';
                 let badgeText = p.category === 'cheap' ? 'اقتصادي' : p.category === 'medium' ? 'متوسط' : 'فاخر';
-                
-                // التحقق هل المنتج في المفضلة
                 const isFav = wishlist.includes(p.id) ? 'active' : '';
 
                 const html = `
                     <div class="product-card">
                         <span class="badge ${badgeClass}">${badgeText}</span>
-                        <div class="wishlist-icon ${isFav}" onclick="toggleWishlist(${p.id})">
+                        <div class="wishlist-icon ${isFav}" onclick="toggleWishlist('${p.id}')">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <img src="${p.img}" class="product-img" onclick="openLightbox('${p.img}')" loading="lazy">
+                        <img src="${p.img}" class="product-img" onclick="openLightbox('${p.img}')" loading="lazy" alt="${p.name}">
                         <div class="product-info">
                             <h3>${p.name}</h3>
                             <div class="price">${p.price} ₪</div>
-                            <button class="add-cart-btn" onclick="addToCart(${p.id})">
+                            <button class="add-cart-btn" onclick="addToCart('${p.id}')">
                                 <i class="fas fa-cart-plus"></i> أضف للسلة
                             </button>
                         </div>
@@ -321,6 +318,7 @@
             });
         }
 
+        /* ================= دوال الفلترة والبحث ================= */
         function filterByCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -342,10 +340,10 @@
             renderProducts(filtered);
         }
 
-        /* ================= السلة والمفضلة ================= */
+        /* ================= منطق السلة والمفضلة ================= */
         function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
+            const product = products.find(p => p.id == id);
+            const existing = cart.find(item => item.id == id);
             
             if (existing) existing.qty++;
             else cart.push({ ...product, qty: 1 });
@@ -364,15 +362,13 @@
             }
             localStorage.setItem('bananWishlist', JSON.stringify(wishlist));
             
-            // إعادة رسم المنتجات لتحديث لون القلب
+            // تحديث القلب مباشرة دون إعادة رسم كل شيء
+            const card = [...document.querySelectorAll('.product-card')].find(c => c.innerHTML.includes(`addToCart('${id}')`));
+            if(card) {
+                const icon = card.querySelector('.wishlist-icon');
+                icon.classList.toggle('active');
+            }
             if(currentCategory === 'wishlist') filterByCategory('wishlist');
-            else renderProducts(products); // هذا قد يعيد الفلتر للكل، الأفضل إعادة تطبيق الفلتر الحالي:
-            // لكن للتبسيط سنعيد رسم الفلتر الحالي:
-            // filterByCategory(currentCategory); (سيسبب loop لانه يستدعي render)
-            // سنقوم بتحديث الـ Class يدوياً للعنصر لكي لا نعيد تحميل الصفحة، لكن الطريقة الحالية أسهل للفهم
-            const activeBtn = document.querySelector('.filter-btn.active');
-            // نعيد تشغيل الفلتر النشط حالياً لتحديث الواجهة
-            if(activeBtn) activeBtn.click();
         }
 
         function saveCart() {
@@ -403,10 +399,10 @@
                                 <div>${item.price} ₪</div>
                             </div>
                             <div class="item-controls">
-                                <button onclick="changeQty(${item.id}, -1)">-</button>
+                                <button onclick="changeQty('${item.id}', -1)">-</button>
                                 <span style="margin:0 10px">${item.qty}</span>
-                                <button onclick="changeQty(${item.id}, 1)">+</button>
-                                <button onclick="removeFromCart(${item.id})" style="color:red; margin-right:10px;"><i class="fas fa-trash"></i></button>
+                                <button onclick="changeQty('${item.id}', 1)">+</button>
+                                <button onclick="removeFromCart('${item.id}')" style="color:red; margin-right:10px;"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -416,7 +412,7 @@
         }
 
         function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
+            const item = cart.find(i => i.id == id);
             if (item) {
                 item.qty += delta;
                 if (item.qty <= 0) removeFromCart(id);
@@ -425,21 +421,19 @@
         }
 
         function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
+            cart = cart.filter(item => item.id != id);
             saveCart();
         }
 
-        /* ================= إتمام الطلب ================= */
+        /* ================= النوافذ المنبثقة ================= */
         function openCartModal() {
             updateCartUI();
             document.getElementById('cartModal').style.display = 'flex';
         }
-
         function openCheckoutModal() {
             document.getElementById('cartModal').style.display = 'none';
             document.getElementById('checkoutModal').style.display = 'flex';
         }
-
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
         }
@@ -450,7 +444,7 @@
             const phone = document.getElementById('custPhone').value.trim();
 
             if(!name || !city) {
-                showToast("الرجاء تعبئة الاسم والمدينة ⚠️");
+                showToast("يرجى كتابة الاسم والمدينة ⚠️");
                 return;
             }
 
@@ -467,11 +461,7 @@
             });
 
             msg += `%0a💰 *المجموع النهائي: ${total} ₪*`;
-
             window.open(`https://wa.me/972569541101?text=${msg}`, '_blank');
-            
-            // تفريغ السلة بعد الطلب (اختياري)
-            // cart = []; saveCart(); closeModal('checkoutModal');
         }
 
         /* ================= أدوات مساعدة ================= */
@@ -506,7 +496,9 @@
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
         }
-        renderProducts(products);
+
+        // بدء جلب البيانات
+        fetchProducts();
         updateCartUI();
 
     </script>
