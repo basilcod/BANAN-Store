@@ -309,7 +309,19 @@
             list.forEach(p => {
                 const isSoldOut = p.stock <= 0;
                 
-                // تحديد الشارة (Badge)
+                // === جديد: إعداد نص الكمية ===
+                let stockText = "";
+                if (!isSoldOut) {
+                    if (p.stock < 5) {
+                        // إذا الكمية قليلة (أقل من 5) تظهر بالأحمر
+                        stockText = `<div style="color:#c0392b; font-size:0.85rem; margin-bottom:5px; font-weight:bold;">🔥 عجل! بقي ${p.stock} قطع فقط</div>`;
+                    } else {
+                        // إذا الكمية كبيرة تظهر بالأخضر
+                        stockText = `<div style="color:#27ae60; font-size:0.85rem; margin-bottom:5px;">✅ متوفر: ${p.stock} قطع</div>`;
+                    }
+                }
+                // ==============================
+
                 let badgeClass, badgeText;
                 if (isSoldOut) {
                     badgeClass = 'badge-soldout';
@@ -320,10 +332,7 @@
                 }
 
                 const isFav = wishlist.includes(p.id) ? 'active' : '';
-                // إضافة كلاس sold-out للكارد إذا الكمية 0 لجعله شفافاً قليلاً
                 const cardClass = isSoldOut ? 'product-card sold-out' : 'product-card';
-                
-                // زر الإضافة
                 const btnAttr = isSoldOut ? 'disabled' : `onclick="addToCart('${p.id}')"`;
                 const btnText = isSoldOut ? 'نفذت الكمية' : '<i class="fas fa-cart-plus"></i> أضف للسلة';
 
@@ -336,6 +345,7 @@
                         <img src="${p.img}" class="product-img" onclick="openLightbox('${p.img}')" loading="lazy" alt="${p.name}">
                         <div class="product-info">
                             <h3>${p.name}</h3>
+                            ${stockText}
                             <div class="price">${p.price} ₪</div>
                             <button class="add-cart-btn" ${btnAttr}>
                                 ${btnText}
