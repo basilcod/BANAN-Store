@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - متجر بنان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        h1, h2 { text-align: center; color: #333; }
+        
+        /* شاشة تسجيل الدخول */
+        #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        #dashboard { display: none; }
+        
+        input, select, button { padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid #ddd; width: 100%; box-sizing: border-box; }
+        button { cursor: pointer; background: #27ae60; color: white; border: none; font-weight: bold; }
+        button:hover { background: #219150; }
+        .delete-btn { background: #c0392b; width: auto; }
+        .delete-btn:hover { background: #a93226; }
+
+        /* الجدول */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background: #f8f9fa; }
+        img.preview { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+
+        /* منطقة الكود النهائي */
+        .code-area { background: #2d2d2d; color: #f8f8f2; padding: 15px; direction: ltr; text-align: left; font-family: monospace; border-radius: 5px; margin-top: 20px; white-space: pre-wrap; display: none; }
+        .copy-btn { background: #3498db; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <h2>🔒 دخول الأدمن</h2>
+        <input type="password" id="password" placeholder="أدخل كلمة المرور" style="max-width: 300px;">
+        <button onclick="checkLogin()" style="max-width: 300px;">دخول</button>
+    </div>
+
+    <div id="dashboard" class="container">
+        <h1>⚙️ إدارة المنتجات</h1>
+        
+        <div style="background: #eef; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <h3>➕ إضافة منتج جديد</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="pName" placeholder="اسم المنتج (مثال: مج الباندا)">
+                <input type="number" id="pPrice" placeholder="السعر (شيكل)">
+                <select id="pCategory">
+                    <option value="cheap">اقتصادي</option>
+                    <option value="medium">متوسط</option>
+                    <option value="premium">فاخر</option>
+                </select>
+                <input type="text" id="pImg" placeholder="رابط الصورة أو الاسم (mugs/1.jpeg)">
+                <button onclick="addProduct()">إضافة للقائمة</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>الصورة</th>
+                    <th>الاسم</th>
+                    <th>السعر</th>
+                    <th>الفئة</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <div style="margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px;">
+            <h2>📤 استخراج الكود النهائي</h2>
+            <p>بعد الانتهاء من التعديلات، اضغط الزر بالأسفل لنسخ الكود الجديد ولصقه في ملف index.html</p>
+            <button class="copy-btn" onclick="generateCode()">عرض ونسخ كود المنتجات</button>
+            <textarea id="finalCode" class="code-area" rows="10"></textarea>
+        </div>
+    </div>
+
+    <script>
+        // === 1. كلمة السر (للحماية البسيطة) ===
+        function checkLogin() {
+            const pass = document.getElementById('password').value;
+            if(pass === "123456") { // يمكنك تغيير كلمة السر من هنا
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                renderTable();
+            } else {
+                alert("كلمة المرور خاطئة!");
+            }
+        }
+
+        // === 2. البيانات الأولية (نفس الموجودة في الموقع) ===
+        // ملاحظة: عند استخدام اللوحة لأول مرة، تأكد أن هذه القائمة مطابقة لما في index.html
+        let products = [
+            { id: 1, name: "مج رقم 1", price: 25, category: "cheap", img: "mugs/jpeg (1).jpeg" },
+            { id: 2, name: "مج رقم 2", price: 28, category: "cheap", img: "mugs/jpeg (2).jpeg" },
+            { id: 3, name: "مج رقم 3", price: 30, category: "cheap", img: "mugs/jpeg (3).jpeg" },
+            { id: 4, name: "مج رقم 4", price: 35, category: "medium", img: "mugs/jpeg (4).jpeg" }
+        ];
+
+        // === 3. دوال الإدارة ===
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            products.forEach((p, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td><img src="${p.img}" class="preview"></td>
+                        <td>${p.name}</td>
+                        <td>${p.price} ₪</td>
+                        <td>${p.category}</td>
+                        <td><button class="delete-btn" onclick="deleteProduct(${index})"><i class="fas fa-trash"></i></button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const category = document.getElementById('pCategory').value;
+            const img = document.getElementById('pImg').value;
+
+            if(!name || !price || !img) {
+                alert("الرجاء تعبئة جميع الحقول!");
+                return;
+            }
+
+            // إنشاء ID جديد تلقائي
+            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+
+            products.push({
+                id: newId,
+                name: name,
+                price: Number(price),
+                category: category,
+                img: img
+            });
+
+            renderTable();
+            
+            // تفريغ الحقول
+            document.getElementById('pName').value = '';
+            document.getElementById('pPrice').value = '';
+        }
+
+        function deleteProduct(index) {
+            if(confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+                products.splice(index, 1);
+                renderTable();
+            }
+        }
+
+        // === 4. توليد الكود لنسخه ===
+        function generateCode() {
+            const codeArea = document.getElementById('finalCode');
+            // تحويل المصفوفة إلى نص كود جافاسكريبت منسق
+            const jsonString = JSON.stringify(products, null, 4);
+            
+            // إضافة تعريف المتغير
+            const finalString = `const products = ${jsonString};`;
+            
+            codeArea.style.display = 'block';
+            codeArea.value = finalString;
+            codeArea.select();
+            document.execCommand('copy');
+            alert("تم نسخ الكود! الآن اذهب لملف index.html واستبدل قائمة products القديمة بهذا الكود.");
+        }
+    </script>
+</body>
+</html>
