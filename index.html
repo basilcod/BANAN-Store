@@ -23,6 +23,7 @@
             --border: #d4b896;
             --success: #27ae60;
             --danger: #c0392b;
+            --disabled: #95a5a6; /* لون جديد للعناصر غير المتوفرة */
         }
 
         [data-theme="dark"] {
@@ -37,7 +38,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.3s, color 0.3s; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 80px; }
         
-        /* === الهيدر === */
         header { 
             background: linear-gradient(135deg, #8b6f47 0%, #5a4729 100%); 
             color: white; padding: 1.5rem 1rem; text-align: center; 
@@ -50,7 +50,6 @@
             width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
         }
 
-        /* === البحث والحاوية === */
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
         .search-container { margin: -35px auto 25px; max-width: 600px; position: relative; z-index: 10; }
         .search-input {
@@ -60,7 +59,6 @@
             background: var(--card-bg); color: var(--text);
         }
 
-        /* === الفلتر === */
         .filter-tabs { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; flex-wrap: wrap; }
         .filter-btn { 
             background: var(--card-bg); color: var(--primary); border: 2px solid var(--primary); 
@@ -70,7 +68,6 @@
         .filter-btn.fav-btn { border-color: var(--danger); color: var(--danger); }
         .filter-btn.fav-btn.active { background: var(--danger); color: white; }
 
-        /* === المنتجات === */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
         .product-card { 
             background: var(--card-bg); border-radius: 15px; overflow: hidden; 
@@ -79,6 +76,10 @@
         }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         
+        /* تأثير الشفافية للمنتجات غير المتوفرة */
+        .product-card.sold-out { opacity: 0.8; filter: grayscale(0.2); }
+        .product-card.sold-out:hover { transform: none; box-shadow: none; }
+
         .product-img { width: 100%; height: 250px; object-fit: cover; cursor: pointer; }
         .product-info { padding: 1.2rem; text-align: center; }
         .price { font-size: 1.3rem; color: var(--primary); font-weight: bold; margin: 0.5rem 0; }
@@ -89,8 +90,15 @@
             cursor: pointer; font-size: 1rem; margin-top: 10px;
         }
         .add-cart-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        
+        /* تنسيق زر نفذت الكمية */
+        .add-cart-btn:disabled {
+            background-color: var(--disabled);
+            cursor: not-allowed;
+            transform: none !important;
+            opacity: 1;
+        }
 
-        /* أيقونة المفضلة والشارات */
         .wishlist-icon {
             position: absolute; top: 10px; left: 10px;
             background: rgba(255,255,255,0.8); width: 35px; height: 35px;
@@ -103,8 +111,8 @@
         .badge-cheap { background-color: var(--success); }
         .badge-medium { background-color: #f39c12; }
         .badge-premium { background-color: var(--danger); }
+        .badge-soldout { background-color: #7f8c8d; } /* شارة رمادية للمباع */
 
-        /* === السلة العائمة === */
         .cart-float {
             position: fixed; bottom: 20px; left: 20px;
             background-color: var(--success); color: white;
@@ -120,7 +128,6 @@
             font-size: 12px; display: flex; justify-content: center; align-items: center; font-weight: bold;
         }
 
-        /* === النوافذ المنبثقة (Modals) === */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;
@@ -134,7 +141,6 @@
         }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--text); }
         
-        /* عناصر السلة */
         .cart-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 10px; }
         .cart-item img { width: 50px; height: 50px; border-radius: 5px; margin-left: 10px; object-fit: cover; }
         .item-details { flex: 1; }
@@ -149,14 +155,12 @@
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
         .form-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
 
-        /* === الإشعارات (Toast) === */
         .toast {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
             background: rgba(0,0,0,0.8); color: white; padding: 10px 20px;
             border-radius: 30px; z-index: 2000; display: none; align-items: center; gap: 10px;
         }
 
-        /* Lightbox */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
         .lightbox img { max-width: 95%; max-height: 80vh; border-radius: 5px; border: 2px solid white; }
 
@@ -244,48 +248,57 @@
     </footer>
 
     <script>
-        /* ================= إعدادات جوجل شيت ================= */
-        // هذا هو الرابط الذي أرسلته أنت، مربوط تلقائياً الآن
+        // رابط جوجل شيت الخاص بك (تأكد أنه لم يتغير)
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
 
-        /* ================= المتغيرات العامة ================= */
         let cart = JSON.parse(localStorage.getItem('bananCart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('bananWishlist')) || [];
         let products = [];
         let currentCategory = 'all';
         const container = document.getElementById('productsContainer');
 
-        /* ================= دالة جلب البيانات ================= */
         async function fetchProducts() {
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.text();
                 
-                // تحويل CSV إلى JSON
-                const rows = data.split('\n').slice(1); // تجاهل سطر العناوين
+                const rows = data.split('\n').slice(1);
+                
                 products = rows.map(row => {
-                    // نستخدم تعبير نمطي بسيط للفصل بالفواصل مع تجاهل الفواصل داخل علامات التنصيص (إذا وجدت)
-                    // للتبسيط سنستخدم split عادي، لكن تأكد أن لا تستخدم فواصل (،) داخل أسماء المنتجات في جوجل شيت
-                    const col = row.split(',');
-                    if(col.length >= 5) {
+                    // تنظيف البيانات
+                    const col = row.split(',').map(cell => cell.replace(/["\r]/g, '').trim());
+
+                    if(col.length >= 6 && col[0] !== '') { // لاحظ: نحتاج الآن 6 أعمدة على الأقل
                         return {
-                            id: col[0].trim(),
-                            name: col[1].trim(),
-                            price: Number(col[2].trim()),
-                            category: col[3].trim(),
-                            img: col[4].trim()
+                            id: col[0],
+                            name: col[1],
+                            price: Number(col[2]),
+                            category: col[3],
+                            img: col[4],
+                            // قراءة المخزون (العمود السادس index 5)
+                            // إذا الخانة فارغة نعتبرها متوفرة (10)
+                            stock: col[5] && col[5] !== '' ? Number(col[5]) : 10
+                        };
+                    } else if (col.length >= 5 && col[0] !== '') {
+                        // في حال لم تضف عمود المخزون بعد، نعتبره متوفراً
+                        return {
+                            id: col[0],
+                            name: col[1],
+                            price: Number(col[2]),
+                            category: col[3],
+                            img: col[4],
+                            stock: 10 
                         };
                     }
-                }).filter(p => p); // تصفية الأسطر الفارغة
+                }).filter(p => p);
 
                 renderProducts(products);
             } catch (error) {
-                console.error("Error:", error);
-                container.innerHTML = '<p style="text-align:center; padding:20px; color:red;">حدث خطأ في تحميل البيانات. يرجى التأكد من الإنترنت.</p>';
+                console.error("حدث خطأ:", error);
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:red;">خطأ في قراءة البيانات</p>';
             }
         }
 
-        /* ================= دوال العرض ================= */
         function renderProducts(list) {
             container.innerHTML = '';
             if(list.length === 0) {
@@ -294,12 +307,28 @@
             }
 
             list.forEach(p => {
-                let badgeClass = p.category === 'cheap' ? 'badge-cheap' : p.category === 'medium' ? 'badge-medium' : 'badge-premium';
-                let badgeText = p.category === 'cheap' ? 'اقتصادي' : p.category === 'medium' ? 'متوسط' : 'فاخر';
+                const isSoldOut = p.stock <= 0;
+                
+                // تحديد الشارة (Badge)
+                let badgeClass, badgeText;
+                if (isSoldOut) {
+                    badgeClass = 'badge-soldout';
+                    badgeText = 'نفذت الكمية 🚫';
+                } else {
+                    badgeClass = p.category === 'cheap' ? 'badge-cheap' : p.category === 'medium' ? 'badge-medium' : 'badge-premium';
+                    badgeText = p.category === 'cheap' ? 'اقتصادي' : p.category === 'medium' ? 'متوسط' : 'فاخر';
+                }
+
                 const isFav = wishlist.includes(p.id) ? 'active' : '';
+                // إضافة كلاس sold-out للكارد إذا الكمية 0 لجعله شفافاً قليلاً
+                const cardClass = isSoldOut ? 'product-card sold-out' : 'product-card';
+                
+                // زر الإضافة
+                const btnAttr = isSoldOut ? 'disabled' : `onclick="addToCart('${p.id}')"`;
+                const btnText = isSoldOut ? 'نفذت الكمية' : '<i class="fas fa-cart-plus"></i> أضف للسلة';
 
                 const html = `
-                    <div class="product-card">
+                    <div class="${cardClass}">
                         <span class="badge ${badgeClass}">${badgeText}</span>
                         <div class="wishlist-icon ${isFav}" onclick="toggleWishlist('${p.id}')">
                             <i class="fas fa-heart"></i>
@@ -308,8 +337,8 @@
                         <div class="product-info">
                             <h3>${p.name}</h3>
                             <div class="price">${p.price} ₪</div>
-                            <button class="add-cart-btn" onclick="addToCart('${p.id}')">
-                                <i class="fas fa-cart-plus"></i> أضف للسلة
+                            <button class="add-cart-btn" ${btnAttr}>
+                                ${btnText}
                             </button>
                         </div>
                     </div>
@@ -318,7 +347,6 @@
             });
         }
 
-        /* ================= دوال الفلترة والبحث ================= */
         function filterByCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -340,11 +368,20 @@
             renderProducts(filtered);
         }
 
-        /* ================= منطق السلة والمفضلة ================= */
         function addToCart(id) {
             const product = products.find(p => p.id == id);
+            
+            // تحقق إضافي من المخزون (رغم أن الزر معطل، لكن لزيادة الأمان)
+            if(product.stock <= 0) {
+                showToast("عذراً، هذا المنتج نفذت كميته!");
+                return;
+            }
+
             const existing = cart.find(item => item.id == id);
             
+            // يمكنك هنا إضافة شرط لعدم تجاوز الكمية المتوفرة
+            // if (existing && existing.qty >= product.stock) { showToast("لا تتوفر كمية إضافية"); return; }
+
             if (existing) existing.qty++;
             else cart.push({ ...product, qty: 1 });
             
@@ -362,11 +399,10 @@
             }
             localStorage.setItem('bananWishlist', JSON.stringify(wishlist));
             
-            // تحديث القلب مباشرة دون إعادة رسم كل شيء
-            const card = [...document.querySelectorAll('.product-card')].find(c => c.innerHTML.includes(`addToCart('${id}')`));
+            const card = [...document.querySelectorAll('.product-card')].find(c => c.innerHTML.includes(`addToCart('${id}')`) || c.innerHTML.includes('نفذت الكمية'));
             if(card) {
                 const icon = card.querySelector('.wishlist-icon');
-                icon.classList.toggle('active');
+                if(icon) icon.classList.toggle('active');
             }
             if(currentCategory === 'wishlist') filterByCategory('wishlist');
         }
@@ -425,7 +461,6 @@
             saveCart();
         }
 
-        /* ================= النوافذ المنبثقة ================= */
         function openCartModal() {
             updateCartUI();
             document.getElementById('cartModal').style.display = 'flex';
@@ -464,7 +499,6 @@
             window.open(`https://wa.me/972569541101?text=${msg}`, '_blank');
         }
 
-        /* ================= أدوات مساعدة ================= */
         function showToast(text) {
             const toast = document.getElementById('toast');
             document.getElementById('toastText').innerText = text;
@@ -491,13 +525,11 @@
             }
         }
 
-        // تشغيل أولي
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
         }
 
-        // بدء جلب البيانات
         fetchProducts();
         updateCartUI();
 
