@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="متجر بنان - BANAN Store | تشكيلة مميزة من المجات والأكواب في فلسطين.">
+    
+    <meta property="og:title" content="BANAN Store - متجر بنان">
+    <meta property="og:description" content="مجك المفضل بتصاميم تلمس القلب. تصفح أجمل المجات في فلسطين.">
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/2935/2935413.png">
+    <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
+    <meta property="og:type" content="website">
+
     <title>BANAN Store - متجر بنان</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,159 +20,142 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
     <style>
-        /* === 1. إعدادات الألوان والزجاج === */
+        /* === إعدادات الألوان === */
         :root {
-            --primary: #6F4E37;
-            --accent: #D4A373;
-            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            /* جعلنا الخلفية أكثر شفافية (0.75) ليعود تأثير الزجاج */
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --text: #2c3e50;
-            --text-muted: #636e72;
-            --success: #27ae60;
-            --danger: #c0392b;
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --primary: #5D4037;   
+            --accent: #8D6E63;    
+            --bg-gradient: linear-gradient(135deg, #efebe9 0%, #d7ccc8 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --text: #3E2723;
+            --text-muted: #5d4037;
+            --success: #388E3C;
+            --danger: #D32F2F;
+            --shadow: 0 8px 32px 0 rgba(62, 39, 35, 0.1);
         }
 
         [data-theme="dark"] {
-            --primary: #D4A373;
-            --accent: #6F4E37;
-            --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
-            /* زجاج داكن شفاف */
-            --glass-bg: rgba(30, 30, 30, 0.65);
+            --primary: #D7CCC8;
+            --accent: #A1887F;
+            --bg-gradient: linear-gradient(135deg, #2D2420 0%, #1A1513 100%);
+            --glass-bg: rgba(45, 36, 32, 0.8);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --text: #dfe6e9;
-            --text-muted: #b2bec3;
+            --text: #efebe9;
+            --text-muted: #bcaaa4;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color .3s, color .3s, transform .2s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color .3s, color .3s, transform .2s, box-shadow .2s; }
         body { font-family: 'Cairo', sans-serif; background: var(--bg-gradient); color: var(--text); padding-bottom: 80px; min-height: 100vh; }
 
-        /* === الهيدر الزجاجي === */
+        /* === الهيدر === */
         header { 
-            background: rgba(111, 78, 55, 0.85); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(93, 64, 55, 0.9);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             color: white; padding: 1rem; text-align: center; 
             position: sticky; top: 0; z-index: 100; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15); 
         }
         .theme-toggle { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
 
         /* === Hero Section === */
         .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
-            background-size: cover; background-position: center; height: 320px; display: flex; align-items: center; justify-content: center; text-align: center; color: white; margin-bottom: 40px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1596080277259-24b423cb0235?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center; height: 350px; 
+            display: flex; align-items: center; justify-content: center; text-align: center; 
+            color: white; margin-bottom: 40px; 
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
         }
-        .hero-content h1 { font-size: 2.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .hero-content button { padding: 10px 30px; background: var(--accent); border: none; color: #fff; border-radius: 50px; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: bold; transition: 0.3s; }
-        .hero-content button:hover { transform: scale(1.05); background: #c6925e; }
+        .hero-content h1 { font-size: 3rem; margin-bottom: 15px; text-shadow: 0 4px 15px rgba(0,0,0,0.6); font-weight: 700; }
+        .hero-content p { font-size: 1.3rem; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); opacity: 0.95; }
+        .hero-content button { padding: 12px 35px; background: #8D6E63; border: none; color: #fff; border-radius: 50px; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: bold; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s; }
+        .hero-content button:hover { transform: translateY(-3px) scale(1.05); background: #6D4C41; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* === منطقة التحكم والبحث === */
-        .controls-area { margin: -60px auto 30px; max-width: 800px; position: relative; z-index: 10; display: flex; flex-direction: column; gap: 15px; }
+        .controls-area { margin: -65px auto 30px; max-width: 800px; position: relative; z-index: 10; display: flex; flex-direction: column; gap: 15px; }
+        .search-input { width: 100%; padding: 18px 30px; border-radius: 50px; border: none; font-size: 1.1rem; font-family: 'Cairo', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.1); outline: none; background: var(--glass-bg); color: var(--text); backdrop-filter: blur(15px); }
         
-        .search-input { 
-            width: 100%; padding: 15px 25px; border-radius: 50px; border: 1px solid var(--glass-border); 
-            font-size: 1.1rem; font-family: 'Cairo', sans-serif; outline: none; 
-            background: var(--glass-bg); color: var(--text); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        }
+        .sort-filter-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .sort-select, .stock-checkbox-label { padding: 10px 20px; border-radius: 20px; border: none; background: var(--glass-bg); color: var(--text); font-family: 'Cairo', sans-serif; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .stock-checkbox-label { display: flex; align-items: center; gap: 8px; user-select: none; }
+
+        .filter-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn { background: var(--glass-bg); color: var(--text); border: 2px solid transparent; padding: 8px 25px; border-radius: 25px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+        .filter-btn.fav-btn.active { background: var(--danger); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
         
-        /* === البطاقات الزجاجية === */
-        .product-card { 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); 
-            border-radius: 20px; overflow: hidden; 
-            box-shadow: var(--shadow); cursor: pointer; position: relative; 
-            transition: 0.3s;
-        }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.2); border-color: var(--accent); }
+        .product-card { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; position: relative; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); border-color: var(--accent); }
         .product-card.sold-out .product-img { filter: grayscale(1); opacity: 0.8; }
         
-        .product-img { width: 100%; height: 240px; object-fit: cover; border-bottom: 4px solid var(--accent); }
+        .product-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 4px solid var(--accent); }
         .product-info { padding: 1.5rem; text-align: center; }
-        .price { font-size: 1.4rem; color: var(--primary); font-weight: bold; margin: 10px 0; }
+        .price { font-size: 1.5rem; color: var(--primary); font-weight: bold; margin: 10px 0; }
         
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
-
-        /* === الأزرار والفلاتر === */
-        .filter-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .filter-btn { background: var(--glass-bg); backdrop-filter: blur(5px); color: var(--text); border: 1px solid var(--accent); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif; }
-        .filter-btn:hover, .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-2px); }
-        .filter-btn.fav-btn.active { background: var(--danger); border-color: var(--danger); }
-
         .add-cart-btn { width: 100%; padding: 12px; border: none; background: var(--primary); color: white; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; font-family: 'Cairo', sans-serif; }
-        .add-cart-btn:hover { opacity: 0.9; }
+        .add-cart-btn:hover { background: var(--accent); }
         .add-cart-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; opacity: 0.8; }
 
-        /* === حل مشكلة الحقول في الوضع الليلي === */
-        .form-group input, .coupon-section input { 
-            width: 100%; padding: 12px; border-radius: 10px; 
-            border: 1px solid #ccc; font-family: 'Cairo', sans-serif; 
-            /* الحل الجذري: خلفية بيضاء ونص أسود دائماً لضمان الرؤية */
-            background: #ffffff !important; 
-            color: #000000 !important; 
-        }
-
-        /* === السلة العائمة === */
-        .cart-float { 
-            position: fixed; bottom: 30px; left: 30px; 
-            background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; 
-            display: flex; justify-content: center; align-items: center; font-size: 26px; cursor: pointer; 
-            box-shadow: 0 10px 25px rgba(111, 78, 55, 0.4); z-index: 9999; /* رفعنا الطبقة لضمان ظهورها */
-            animation: pulse 3s infinite;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(111, 78, 55, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(111, 78, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(111, 78, 55, 0); } }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: var(--danger); width: 25px; height: 25px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid white; }
-
-        /* === النوافذ المنبثقة (Modals) === */
-        .modal, .product-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 15px; }
-        
-        .modal-content, .product-modal-content { 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); /* زجاج حقيقي */
-            width: 100%; max-width: 500px; padding: 30px; border-radius: 25px; 
-            position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.3); 
-            border: 1px solid var(--glass-border);
-            max-height: 90vh; overflow-y: auto;
-            animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .product-modal-content { max-width: 900px; }
-
-        @keyframes zoomIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        /* باقي التفاصيل */
         .wishlist-icon { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #bdc3c7; font-size: 1.2rem; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .wishlist-icon.active { color: var(--danger); }
-        .badge { position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 30px; color: white; font-size: 0.8rem; font-weight: bold; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        .badge { position: absolute; top: 15px; right: 15px; padding: 6px 15px; border-radius: 30px; color: white; font-size: 0.85rem; font-weight: bold; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .badge-cheap { background-color: var(--success); } .badge-medium { background-color: #f39c12; } .badge-premium { background-color: var(--danger); } .badge-soldout { background-color: #7f8c8d; } .badge-default { background-color: var(--primary); }
 
-        .pm-main { display: flex; gap: 20px; }
-        .pm-image { flex: 1; background: #eee; min-height: 300px; border-radius: 15px; overflow: hidden; }
+        /* Modals */
+        .modal, .product-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 15px; }
+        .modal-content, .product-modal-content { background: var(--glass-bg); backdrop-filter: blur(20px); width: 100%; max-width: 500px; padding: 30px; border-radius: 25px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border: 1px solid var(--glass-border); max-height: 90vh; overflow-y: auto; animation: zoomIn 0.3s; }
+        .product-modal-content { max-width: 900px; }
+        @keyframes zoomIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .pm-main { display: flex; gap: 25px; }
+        .pm-image { flex: 1; background: #eee; min-height: 350px; border-radius: 20px; overflow: hidden; }
         .pm-image img { width: 100%; height: 100%; object-fit: cover; }
         .pm-details { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         
-        .cart-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.5); padding: 10px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05); }
-        .cart-item img { width: 50px; height: 50px; border-radius: 8px; margin-left: 15px; object-fit: cover; }
-        .item-controls button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--accent); background: white; cursor: pointer; color: var(--primary); font-weight: bold; }
+        .cart-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05); }
+        .cart-item img { width: 60px; height: 60px; border-radius: 10px; margin-left: 15px; object-fit: cover; }
+        .item-controls button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--accent); background: white; cursor: pointer; color: var(--primary); font-weight: bold; }
         
-        .checkout-btn { width: 100%; background: var(--success); color: white; padding: 15px; border-radius: 12px; border: none; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 20px; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        .checkout-btn:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
-        .form-group { margin-bottom: 15px; } .form-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; }
+        .checkout-btn { width: 100%; background: var(--success); color: white; padding: 15px; border-radius: 15px; border: none; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 20px; font-family: 'Cairo', sans-serif; transition: 0.3s; box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); }
+        .checkout-btn:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4); }
         
-        .toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.9); color: white; padding: 12px 30px; border-radius: 50px; z-index: 20000; display: none; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .form-group { margin-bottom: 15px; } .form-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.95rem; }
+        .form-group input, .coupon-section input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ccc; font-family: 'Cairo', sans-serif; background: #ffffff !important; color: #000000 !important; }
         
         .coupon-section { display: flex; gap: 10px; margin-top: 20px; }
-        .coupon-section button { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .coupon-section button { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 12px; font-weight: bold; cursor: pointer; }
 
-        @media (max-width: 700px) { .pm-main { flex-direction: column; } .pm-image { height: 250px; flex: none; } }
+        .cart-float { position: fixed; bottom: 30px; left: 30px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 9999; animation: pulse 3s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(93, 64, 55, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(93, 64, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(93, 64, 55, 0); } }
+        .cart-count { position: absolute; top: 0; right: 0; background: var(--danger); width: 24px; height: 24px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid white; }
+
+        .related-section { padding: 30px; background: rgba(0,0,0,0.03); margin-top: 20px; border-radius: 15px; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; }
+        .related-card { background: white; border-radius: 15px; padding: 10px; text-align: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .related-card img { width: 100%; height: 100px; object-fit: cover; border-radius: 10px; }
+
+        .toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.95); color: white; padding: 12px 35px; border-radius: 50px; z-index: 20000; display: none; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-weight: bold; }
+        
+        /* === Footer & Social Links === */
+        footer { text-align: center; margin-top: 5rem; padding-bottom: 2rem; opacity: 0.9; }
+        .social-links { margin-bottom: 15px; }
+        .social-links a {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 45px; height: 45px; margin: 0 8px; border-radius: 50%;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            color: var(--text); font-size: 1.4rem; text-decoration: none;
+            transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .social-links a:hover { transform: translateY(-5px); color: white; }
+        .social-links a.fb:hover { background: #1877F2; border-color: #1877F2; }
+        .social-links a.ig:hover { background: #E4405F; border-color: #E4405F; }
+
+        @media (max-width: 700px) { .pm-main { flex-direction: column; } .pm-image { height: 250px; flex: none; } .hero-section { height: 300px; } .hero-content h1 { font-size: 2rem; } }
     </style>
 </head>
 <body>
@@ -178,8 +169,8 @@
 
     <section class="hero-section">
         <div class="hero-content">
-            <h1>قهوتك، كما تحب أن تراها ☕</h1>
-            <p>مجموعة حصرية من المجات بتصاميم تلمس القلب.</p>
+            <h1>مجك المفضل، كما تحب أن تراه</h1>
+            <p>مجموعة حصرية من المجات الفريدة بتصاميم تلمس القلب.</p>
             <button onclick="document.querySelector('.controls-area').scrollIntoView({behavior: 'smooth'})">تصفح المجموعة</button>
         </div>
     </section>
@@ -187,7 +178,18 @@
     <div class="container">
         <div class="controls-area">
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن مج...">
+            <div class="sort-filter-container">
+                <select id="sortSelect" class="sort-select">
+                    <option value="default">الترتيب الافتراضي</option>
+                    <option value="low-high">السعر: من الأقل للأعلى</option>
+                    <option value="high-low">السعر: من الأعلى للأقل</option>
+                </select>
+                <label class="stock-checkbox-label">
+                    <input type="checkbox" id="stockCheckbox">
+                    <span>عرض المتوفر فقط ✅</span>
+                </label>
             </div>
+        </div>
 
         <div class="filter-tabs" id="filterContainer"></div>
         <div class="products-grid" id="productsContainer">
@@ -202,9 +204,9 @@
 
     <div class="product-modal" id="productModal">
         <div class="product-modal-content">
-            <span class="pm-close" onclick="closeProductModal()" style="position:absolute; top:20px; right:20px; font-size:1.5rem; cursor:pointer; z-index:10;">&times;</span>
+            <span class="pm-close" onclick="closeProductModal()" style="position:absolute; top:20px; right:20px; font-size:1.5rem; cursor:pointer; z-index:10; background:rgba(255,255,255,0.8); border-radius:50%; width:35px; height:35px; display:flex; justify-content:center; align-items:center;">&times;</span>
             <div class="pm-main">
-                <div class="pm-image"><img id="pmImg" src=""></div>
+                <div class="pm-image"><img id="pmImg" src="" alt=""></div>
                 <div class="pm-details">
                     <span id="pmBadge" class="badge"></span>
                     <h2 id="pmName" style="font-size:1.8rem; margin-bottom:10px; color:var(--primary);"></h2>
@@ -216,7 +218,15 @@
                     <button id="pmBuyNow" class="checkout-btn" style="margin-top:10px; background:#25D366;">
                         <i class="fab fa-whatsapp"></i> طلب سريع
                     </button>
+                    <button id="pmShare" style="width:100%; padding:12px; background:#3498db; color:white; border:none; border-radius:10px; cursor:pointer; margin-top:10px; font-family:'Cairo', sans-serif;">
+                        <i class="fas fa-share-alt"></i> مشاركة المنتج
+                    </button>
                 </div>
+            </div>
+            
+            <div class="related-section">
+                <div style="font-weight:bold; margin-bottom:15px; color:var(--text);">✨ قد يعجبك أيضاً:</div>
+                <div class="related-grid" id="relatedContainer"></div>
             </div>
         </div>
     </div>
@@ -265,7 +275,17 @@
         </div>
     </div>
 
-    <footer><p>&copy; 2026 BANAN Store - فلسطين 🇵🇸</p></footer>
+    <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/share/g/182BXUsMyq/" target="_blank" class="fb" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/themugsbybanan" target="_blank" class="ig" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <p>&copy; 2026 BANAN Store - فلسطين 🇵🇸</p>
+    </footer>
 
     <script>
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
@@ -354,6 +374,15 @@
 
             const search = document.getElementById('searchInput').value.toLowerCase();
             if(search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search));
+            
+            if (document.getElementById('stockCheckbox').checked) {
+                filtered = filtered.filter(p => p.stock > 0);
+            }
+
+            const sortValue = document.getElementById('sortSelect').value;
+            if (sortValue === 'low-high') filtered.sort((a, b) => a.price - b.price);
+            else if (sortValue === 'high-low') filtered.sort((a, b) => b.price - a.price);
+            else filtered.sort((a, b) => a.originalOrder - b.originalOrder);
 
             renderProducts(filtered);
         }
@@ -488,8 +517,15 @@
             document.getElementById('pmDesc').innerText = p.description;
             document.getElementById('pmPrice').innerText = p.price + ' ₪';
             document.getElementById('pmBadge').innerText = categoryLabels[p.category] || p.category;
-            document.getElementById('pmBadge').className = `badge badge-${p.category}`; // Simple logic
+            document.getElementById('pmBadge').className = `badge badge-${p.category}`; 
             
+            // Share Button
+            document.getElementById('pmShare').onclick = () => {
+                const shareData = { title: `Banan Store - ${p.name}`, text: `شوف هالمج الحلو: ${p.name}`, url: window.location.href };
+                if(navigator.share) navigator.share(shareData);
+                else { navigator.clipboard.writeText(window.location.href); showToast('تم نسخ الرابط'); }
+            };
+
             const btn = document.getElementById('pmBtn');
             const buyNow = document.getElementById('pmBuyNow');
             
@@ -517,7 +553,8 @@
             let msg = `*طلب جديد ☕*\nالاسم: ${name}\nالعنوان: ${city}\nرقم: ${phone}\n\n`;
             cart.forEach(i => msg += `- ${i.name} (${i.qty}) = ${i.price*i.qty}₪\n`);
             
-            const total = document.getElementById('cartTotal').innerText; // Get final text
+            if(appliedCoupon) msg += `\nكوبون: ${appliedCoupon.code}`;
+            const total = document.getElementById('cartTotal').innerText;
             msg += `\n*المجموع: ${total}*`;
             
             window.open(`https://wa.me/972569541101?text=${encodeURIComponent(msg)}`, '_blank');
@@ -548,6 +585,17 @@
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(applyFilters, 300);
         });
+
+        document.getElementById('sortSelect').addEventListener('change', applyFilters);
+        document.getElementById('stockCheckbox').addEventListener('change', applyFilters);
+
+        // Keyboard support for cart
+        const cartFloat = document.querySelector('.cart-float');
+        if(cartFloat) {
+            cartFloat.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCartModal(); }
+            });
+        }
 
         // Start
         fetchProducts();
