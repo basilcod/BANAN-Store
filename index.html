@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="متجر بنان - BANAN Store | تشكيلة مميزة من المجات والأكواب في فلسطين.">
+    
+    <meta property="og:title" content="BANAN Store - متجر بنان">
+    <meta property="og:description" content="قهوتك، كما تحب أن تراها. تصفح أجمل المجات في فلسطين.">
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/2935/2935413.png"> <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
+    <meta property="og:type" content="website">
+
     <title>BANAN Store - متجر بنان</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +44,9 @@
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+        /* تحسين الأداء: تحديد الخصائص بدلاً من all */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color .3s, color .3s, transform .2s, box-shadow .2s; }
+        
         body { font-family: 'Cairo', sans-serif; background: var(--bg-gradient); color: var(--text); padding-bottom: 80px; min-height: 100vh; }
 
         header { background: rgba(111, 78, 55, 0.95); backdrop-filter: blur(10px); color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
@@ -54,16 +62,13 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         
-        /* أدوات التحكم (بحث + فرز) */
         .controls-area { margin: -65px auto 30px; max-width: 800px; position: relative; z-index: 10; display: flex; flex-direction: column; gap: 15px; }
-        
-        .search-container { width: 100%; }
         .search-input { width: 100%; padding: 18px 30px; border-radius: 50px; border: none; font-size: 1.1rem; font-family: 'Cairo', sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.1); outline: none; background: var(--glass-bg); color: var(--text); backdrop-filter: blur(10px); }
         
         .sort-filter-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .sort-select { padding: 10px 20px; border-radius: 20px; border: none; background: var(--glass-bg); color: var(--text); font-family: 'Cairo', sans-serif; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .stock-checkbox-label { display: flex; align-items: center; gap: 8px; background: var(--glass-bg); padding: 10px 20px; border-radius: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.05); user-select: none; }
-        
+
         .filter-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         .filter-btn { background: transparent; color: var(--text); border: 2px solid var(--accent); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif; }
         .filter-btn:hover, .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-2px); }
@@ -71,14 +76,9 @@
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
         
-        .product-card { 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; position: relative;
-        }
+        .product-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; position: relative; }
         .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--accent); }
-        
-        /* === تعديل المنتجات المنتهية (UX Fix) === */
-        /* حذفنا pointer-events: none لنسمح بالتفاعل */
-        .product-card.sold-out .product-img { filter: grayscale(1); opacity: 0.8; } /* رمادي للصورة فقط */
+        .product-card.sold-out .product-img { filter: grayscale(1); opacity: 0.8; }
         .product-card.sold-out .price { color: #7f8c8d; }
         
         .product-img { width: 100%; height: 240px; object-fit: cover; border-bottom: 4px solid var(--accent); }
@@ -92,10 +92,15 @@
         .wishlist-icon { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #bdc3c7; font-size: 1.2rem; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .wishlist-icon.active { color: var(--danger); }
 
+        /* ✅ إصلاح: إضافة ألوان البادج الناقصة */
         .badge { position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 30px; color: white; font-size: 0.8rem; font-weight: bold; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .badge-cheap { background-color: var(--success); }
+        .badge-medium { background-color: #f39c12; }
+        .badge-premium { background-color: var(--danger); }
         .badge-soldout { background-color: #7f8c8d; }
         .badge-default { background-color: var(--primary); }
 
+        /* Modal Styles */
         .product-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 20px; }
         .product-modal-content { background: var(--glass-bg); width: 100%; max-width: 900px; border-radius: 25px; display: flex; flex-direction: column; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: zoomIn 0.3s; position: relative; }
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -123,11 +128,8 @@
         .cart-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(255,255,255,0.5); padding: 10px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05); }
         .cart-item img { width: 50px; height: 50px; border-radius: 8px; margin-left: 15px; object-fit: cover; }
         .item-controls button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--accent); background: white; cursor: pointer; color: var(--primary); font-weight: bold; }
-        
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; }
-        .form-group input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; font-family: 'Cairo', sans-serif; }
         .checkout-btn { width: 100%; background: var(--success); color: white; padding: 15px; border-radius: 12px; border: none; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 20px; font-family: 'Cairo', sans-serif; }
+        .form-group { margin-bottom: 15px; } .form-group label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; } .form-group input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; font-family: 'Cairo', sans-serif; }
 
         .toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); background: rgba(44, 62, 80, 0.9); color: white; padding: 12px 30px; border-radius: 50px; z-index: 3000; display: none; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         footer { text-align: center; margin-top: 5rem; opacity: 0.7; font-size: 0.9rem; }
@@ -162,7 +164,6 @@
                     <option value="low-high">السعر: من الأقل للأعلى</option>
                     <option value="high-low">السعر: من الأعلى للأقل</option>
                 </select>
-                
                 <label class="stock-checkbox-label">
                     <input type="checkbox" id="stockCheckbox" onchange="applyFilters()">
                     <span>عرض المتوفر فقط ✅</span>
@@ -241,15 +242,31 @@
         const filterContainer = document.getElementById('filterContainer');
         const categoryLabels = { 'cheap': 'اقتصادي', 'medium': 'متوسط', 'premium': 'فاخر', 'all': 'الكل' };
 
+        // ✅ وظيفة الأمان: تنظيف النصوص من أي كود HTML
+        function escapeHTML(str) {
+            if (!str) return "";
+            return String(str).replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[m];
+            });
+        }
+
         function fetchProducts() {
             Papa.parse(sheetURL, {
                 download: true,
                 header: false,
                 complete: function(results) {
                     const rows = results.data.slice(1);
-                    products = rows.map(col => {
+                    // ✅ إضافة originalOrder لحل مشكلة الفرز الافتراضي
+                    products = rows.map((col, index) => {
                         if(col.length >= 5 && col[0]) {
                             return {
+                                originalOrder: index, // حفظ الترتيب الأصلي
                                 id: col[0].trim(),
                                 name: col[1].trim(),
                                 price: Number(col[2]),
@@ -261,7 +278,7 @@
                         }
                     }).filter(p => p);
 
-                    syncCartWithLatestData(); // === 3. مزامنة السلة فوراً ===
+                    syncCartWithLatestData();
                     generateDynamicButtons();
                     applyFilters();
                 },
@@ -272,27 +289,31 @@
             });
         }
 
-        // === 3. دالة مزامنة السلة (Sync Cart) ===
-        // تحديث السعر والاسم من الشيت، وحذف المنتجات المحذوفة
+        // ✅ إصلاح مزامنة السلة (يحذف المنتجات المحذوفة ويضبط الكميات)
         function syncCartWithLatestData() {
-            let cartChanged = false;
+            const beforeLen = cart.length;
+            let changed = false;
+
             cart = cart.map(item => {
-                const freshProduct = products.find(p => p.id === item.id);
-                if (freshProduct) {
-                    // تحديث بيانات المنتج في السلة بناءً على الشيت الجديد
-                    if (item.price !== freshProduct.price || item.name !== freshProduct.name) {
-                        cartChanged = true;
-                        return { ...freshProduct, qty: item.qty };
-                    }
-                    return item;
-                }
-                return null; // المنتج حذف من الشيت
-            }).filter(item => item !== null); // حذف الـ nulls
-            
-            if (cartChanged) {
-                saveCart();
-                console.log("تم تحديث السلة بناءً على الأسعار الجديدة");
-            }
+                const p = products.find(x => x.id === item.id);
+                // إذا المنتج انحذف من الشيت، نرجعه null ليتم فلترته لاحقاً
+                if (!p) { changed = true; return null; }
+
+                // التأكد أن الكمية لا تتجاوز المخزون الجديد
+                const newQty = Math.min(item.qty, p.stock || 0);
+                if (newQty !== item.qty) changed = true;
+
+                // إذا المخزون أصبح 0، نحذف المنتج من السلة (خيار أفضل)
+                if ((p.stock || 0) <= 0) { changed = true; return null; }
+
+                // تحديث بيانات السعر والاسم والصورة دائماً
+                if (item.price !== p.price || item.name !== p.name || item.img !== p.img) changed = true;
+                
+                return { ...p, qty: newQty };
+            }).filter(Boolean); // حذف الـ null
+
+            if (beforeLen !== cart.length) changed = true;
+            if (changed) saveCart();
         }
 
         function generateDynamicButtons() {
@@ -322,18 +343,16 @@
             applyFilters();
         }
 
-        // === 4. فلترة وفرز متطور (Sorting & Availability) ===
         function applyFilters() {
-            let filtered = products;
+            // ✅ استخدام نسخة من المصفوفة لتجنب تعديل الأصل
+            let filtered = [...products];
 
-            // 1. فلتر الفئة
             if (currentCategory === 'wishlist') {
                 filtered = filtered.filter(p => wishlist.includes(p.id));
             } else if (currentCategory !== 'all') {
                 filtered = filtered.filter(p => p.category === currentCategory);
             }
 
-            // 2. فلتر البحث
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             if (searchTerm) {
                 filtered = filtered.filter(p => 
@@ -342,18 +361,20 @@
                 );
             }
 
-            // 3. فلتر التوفر (Available Only)
             const showAvailableOnly = document.getElementById('stockCheckbox').checked;
             if (showAvailableOnly) {
                 filtered = filtered.filter(p => p.stock > 0);
             }
 
-            // 4. الفرز (Sorting)
+            // ✅ الفرز الآمن باستخدام النسخة
             const sortValue = document.getElementById('sortSelect').value;
             if (sortValue === 'low-high') {
                 filtered.sort((a, b) => a.price - b.price);
             } else if (sortValue === 'high-low') {
                 filtered.sort((a, b) => b.price - a.price);
+            } else {
+                // العودة للترتيب الأصلي
+                filtered.sort((a, b) => a.originalOrder - b.originalOrder);
             }
 
             renderProducts(filtered);
@@ -385,6 +406,8 @@
 
                 const isFav = wishlist.includes(p.id) ? 'active' : '';
                 const cardClass = isSoldOut ? 'product-card sold-out' : 'product-card';
+                // ✅ استخدام escapeHTML للأمان
+                const safeName = escapeHTML(p.name);
 
                 return `
                     <div class="${cardClass}" onclick="openDetails('${p.id}')">
@@ -392,9 +415,9 @@
                         <div class="wishlist-icon ${isFav}" onclick="event.stopPropagation(); toggleWishlist('${p.id}')">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <img src="${p.img}" class="product-img" loading="lazy" alt="${p.name}">
+                        <img src="${p.img}" class="product-img" loading="lazy" alt="${safeName}">
                         <div class="product-info">
-                            <h3>${p.name}</h3>
+                            <h3>${safeName}</h3>
                             ${stockHTML}
                             <div class="price">${p.price} ₪</div>
                             <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')" ${isSoldOut ? 'disabled' : ''}>
@@ -470,11 +493,13 @@
                 document.getElementById('proceedBtn').style.display = 'block';
                 cart.forEach(item => {
                     total += item.price * item.qty;
+                    // ✅ استخدام escapeHTML في السلة أيضاً
+                    const safeName = escapeHTML(item.name);
                     cartList.innerHTML += `
                         <div class="cart-item">
                             <img src="${item.img}">
                             <div class="item-details" style="margin-right:10px;">
-                                <h4 style="font-size:0.9rem;">${item.name}</h4>
+                                <h4 style="font-size:0.9rem;">${safeName}</h4>
                                 <div style="color:var(--primary); font-weight:bold;">${item.price} ₪</div>
                             </div>
                             <div class="item-controls">
@@ -494,9 +519,10 @@
             if(!p) return;
 
             const modal = document.getElementById('productModal');
+            // ✅ استخدام escapeHTML في التفاصيل
             document.getElementById('pmImg').src = p.img;
-            document.getElementById('pmName').innerText = p.name;
-            document.getElementById('pmDesc').innerText = p.description;
+            document.getElementById('pmName').innerText = escapeHTML(p.name);
+            document.getElementById('pmDesc').innerText = escapeHTML(p.description);
             document.getElementById('pmPrice').innerText = p.price + ' ₪';
             
             const badge = document.getElementById('pmBadge');
@@ -532,7 +558,7 @@
                     relatedContainer.innerHTML += `
                         <div class="related-card" onclick="openDetails('${r.id}')">
                             <img src="${r.img}">
-                            <h4 style="font-size:0.9rem;">${r.name}</h4>
+                            <h4 style="font-size:0.9rem;">${escapeHTML(r.name)}</h4>
                             <div style="font-weight:bold; color:var(--primary);">${r.price} ₪</div>
                         </div>`;
                 });
@@ -550,8 +576,10 @@
         function openCartModal() { updateCartUI(); document.getElementById('cartModal').style.display = 'flex'; }
         function openCheckoutModal() { document.getElementById('cartModal').style.display = 'none'; document.getElementById('checkoutModal').style.display = 'flex'; }
 
-        // === 2. واتساب آمن (Encoding) ===
         function sendWhatsApp() {
+            // ✅ تحقق من أن السلة ليست فارغة
+            if(cart.length === 0){ showToast("السلة فارغة!"); return; }
+
             const name = document.getElementById('custName').value.trim();
             const city = document.getElementById('custCity').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
@@ -570,9 +598,13 @@
             
             msg += `\n💰 *المجموع النهائي: ${total} ₪*`;
             
-            // استخدام encodeURIComponent لضمان عدم كسر الرابط
             const url = `https://wa.me/972569541101?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank');
+
+            // ✅ تفريغ السلة بعد الطلب (تجربة مستخدم أفضل)
+            cart = [];
+            saveCart();
+            closeModal('checkoutModal');
         }
 
         function showToast(text) { const toast = document.getElementById('toast'); document.getElementById('toastText').innerText = text; toast.style.display = 'flex'; setTimeout(() => { toast.style.display = 'none'; }, 3000); }
