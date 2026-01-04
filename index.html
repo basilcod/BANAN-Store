@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="متجر بنان - BANAN Store | تشكيلة مميزة من المجات والأكواب في فلسطين.">
-    
     <meta property="og:title" content="متجر بنان للمجات المميزة">
     <meta property="og:description" content="أجمل التصاميم العصرية والكلاسيكية، توصيل لكل فلسطين.">
-    <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
     
     <title>BANAN Store - متجر بنان</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
     <style>
         /* === الألوان والثيمات === */
         :root {
             --primary: #8b6f47;
-            --secondary: #6b5638;
             --bg: #f5f0eb;
             --card-bg: #ffffff;
             --text: #4a3728;
+            --text-muted: #666; /* لون للنصوص الفرعية */
             --border: #d4b896;
             --success: #27ae60;
             --danger: #c0392b;
@@ -28,10 +28,10 @@
 
         [data-theme="dark"] {
             --primary: #d4b896;
-            --secondary: #8b6f47;
             --bg: #1a1a1a;
             --card-bg: #2d2d2d;
             --text: #f5f0eb;
+            --text-muted: #bbb; /* لون فاتح للنصوص الفرعية في الدارك مود */
             --border: #444;
         }
 
@@ -59,12 +59,12 @@
             background: var(--card-bg); color: var(--text);
         }
 
-        /* تنسيق الأزرار (سيتم توليدها تلقائياً) */
+        /* تنسيق الأزرار */
         .filter-tabs { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; flex-wrap: wrap; }
         .filter-btn { 
             background: var(--card-bg); color: var(--primary); border: 2px solid var(--primary); 
             padding: 0.6rem 1.2rem; border-radius: 25px; cursor: pointer; font-weight: bold; 
-            text-transform: capitalize; /* يجعل أول حرف كبيراً */
+            text-transform: capitalize; 
         }
         .filter-btn:hover, .filter-btn.active { background: var(--primary); color: var(--bg); border-color: var(--primary); }
         .filter-btn.fav-btn { border-color: var(--danger); color: var(--danger); }
@@ -77,7 +77,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer;
         }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .product-card.sold-out { opacity: 0.8; filter: grayscale(0.2); }
+        .product-card.sold-out { opacity: 0.8; filter: grayscale(0.8); pointer-events: none; }
         
         .product-img { width: 100%; height: 250px; object-fit: cover; }
         .product-info { padding: 1.2rem; text-align: center; }
@@ -105,9 +105,9 @@
         .badge-medium { background-color: #f39c12; }
         .badge-premium { background-color: var(--danger); }
         .badge-soldout { background-color: #7f8c8d; }
-        .badge-default { background-color: var(--primary); } /* لأي قسم جديد */
+        .badge-default { background-color: var(--primary); }
 
-        /* === Product Modal Style === */
+        /* === Product Modal === */
         .product-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 1500; justify-content: center; align-items: center;
@@ -115,7 +115,7 @@
         }
         .product-modal-content {
             background: var(--card-bg); width: 100%; max-width: 900px; border-radius: 15px;
-            display: flex; flex-direction: column; /* تعديل ليتسع للمنتجات المشابهة */
+            display: flex; flex-direction: column; 
             max-height: 95vh; overflow-y: auto;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3); animation: zoomIn 0.3s ease; position: relative;
         }
@@ -123,26 +123,21 @@
         .pm-image { flex: 1; background: #eee; min-height: 300px; }
         .pm-image img { width: 100%; height: 100%; object-fit: cover; }
         .pm-details { flex: 1; padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+        
+        /* تعديل اللون ليصبح متغيراً حسب الثيم */
+        #pmDesc { color: var(--text-muted); margin-bottom: 20px; line-height: 1.8; }
+        
         .pm-close { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: var(--text); z-index: 10; background: rgba(255,255,255,0.5); width: 40px; height: 40px; border-radius: 50%; text-align: center; line-height: 40px; }
         
-        /* قسم المنتجات المشابهة */
         .related-section { padding: 20px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.02); }
-        .related-title { font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; color: var(--secondary); }
         .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; }
         .related-card { background: var(--card-bg); border-radius: 10px; padding: 10px; text-align: center; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-        .related-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .related-card img { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; margin-bottom: 5px; }
-        .related-card h4 { font-size: 0.9rem; margin: 5px 0; }
-        .related-card .price { font-size: 1rem; margin: 0; }
+        .related-card img { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; }
 
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @media (max-width: 700px) { .pm-main { flex-direction: column; } .pm-image { height: 250px; flex: none; } }
 
-        @media (max-width: 700px) {
-            .pm-main { flex-direction: column; }
-            .pm-image { height: 250px; flex: none; }
-        }
-
-        /* === باقي التنسيقات === */
+        /* === Cart & UI === */
         .cart-float { position: fixed; bottom: 20px; left: 20px; background-color: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 999; }
         .cart-count { position: absolute; top: -5px; right: -5px; background: var(--danger); color: white; width: 24px; height: 24px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; font-weight: bold; }
 
@@ -170,7 +165,7 @@
     <div id="toast" class="toast"><i class="fas fa-check-circle" style="color: #2ecc71;"></i> <span id="toastText">تمت الإضافة</span></div>
 
     <header>
-        <button class="theme-toggle" onclick="toggleTheme()">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي">
             <i class="fas fa-moon" id="themeIcon"></i>
         </button>
         <h1>☕ BANAN Store</h1>
@@ -179,7 +174,7 @@
 
     <div class="container">
         <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن مج، باندا، أو بالسعر..." onkeyup="filterProducts()">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن مج، باندا، أو بالسعر..." onkeyup="applyFilters()">
         </div>
 
         <div class="filter-tabs" id="filterContainer">
@@ -195,28 +190,23 @@
         <span class="cart-count" id="cartCount">0</span>
     </div>
 
-    <div class="product-modal" id="productModal" onclick="if(event.target===this) closeProductModal()">
+    <div class="product-modal" id="productModal">
         <div class="product-modal-content">
             <span class="pm-close" onclick="closeProductModal()">&times;</span>
-            
             <div class="pm-main">
-                <div class="pm-image">
-                    <img id="pmImg" src="" alt="صورة المنتج">
-                </div>
+                <div class="pm-image"><img id="pmImg" src=""></div>
                 <div class="pm-details">
-                    <span id="pmBadge" class="badge" style="position:relative; top:0; right:0; align-self:flex-start; margin-bottom:10px;"></span>
+                    <span id="pmBadge" class="badge"></span>
                     <h2 id="pmName" style="font-size:1.8rem; margin-bottom:10px;"></h2>
                     <div id="pmStockText" style="margin-bottom:10px;"></div>
-                    <p id="pmDesc" style="color:#666; margin-bottom:20px; line-height:1.8;"></p>
+                    <p id="pmDesc"></p>
                     <div id="pmPrice" style="font-size:2rem; color:var(--primary); font-weight:bold; margin-bottom:20px;"></div>
-                    <button id="pmBtn" class="add-cart-btn" style="padding:15px; font-size:1.2rem;">أضف للسلة</button>
+                    <button id="pmBtn" class="add-cart-btn">أضف للسلة</button>
                 </div>
             </div>
-
             <div class="related-section">
-                <div class="related-title">✨ قد يعجبك أيضاً:</div>
-                <div class="related-grid" id="relatedContainer">
-                    </div>
+                <div style="font-weight:bold; margin-bottom:15px; color:var(--text)">✨ قد يعجبك أيضاً:</div>
+                <div class="related-grid" id="relatedContainer"></div>
             </div>
         </div>
     </div>
@@ -224,12 +214,11 @@
     <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('cartModal')">&times;</span>
-            <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">🛒 سلة المشتريات</h3>
-            <div id="cartItems" style="max-height: 300px; overflow-y: auto;"></div>
+            <h3>🛒 سلة المشتريات</h3>
+            <div id="cartItems" style="max-height: 300px; overflow-y: auto; margin-top:15px;"></div>
             <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px;">
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px;">
-                    <span>المجموع:</span>
-                    <span id="cartTotal">0 ₪</span>
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem;">
+                    <span>المجموع:</span><span id="cartTotal">0 ₪</span>
                 </div>
                 <button id="proceedBtn" class="checkout-btn" onclick="openCheckoutModal()">المتابعة للدفع</button>
             </div>
@@ -239,28 +228,15 @@
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('checkoutModal')">&times;</span>
-            <h3 style="text-align: center; margin-bottom: 20px;">📦 معلومات التوصيل</h3>
-            <div class="form-group">
-                <label>الاسم الكريم:</label>
-                <input type="text" id="custName" placeholder="مثال: أحمد محمد">
-            </div>
-            <div class="form-group">
-                <label>المدينة / القرية:</label>
-                <input type="text" id="custCity" placeholder="مثال: رام الله، بيرزيت">
-            </div>
-            <div class="form-group">
-                <label>رقم جوال للتواصل:</label>
-                <input type="tel" id="custPhone" placeholder="059xxxxxxx">
-            </div>
-            <button class="checkout-btn" onclick="sendWhatsApp()">
-                <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
-            </button>
+            <h3>📦 معلومات التوصيل</h3>
+            <div class="form-group"><label>الاسم:</label><input type="text" id="custName" placeholder="أحمد محمد"></div>
+            <div class="form-group"><label>العنوان:</label><input type="text" id="custCity" placeholder="رام الله"></div>
+            <div class="form-group"><label>الهاتف:</label><input type="tel" id="custPhone" placeholder="059xxxxxxx"></div>
+            <button class="checkout-btn" onclick="sendWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال الطلب</button>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 BANAN Store - فلسطين 🇵🇸</p>
-    </footer>
+    <footer><p>&copy; 2026 BANAN Store - فلسطين 🇵🇸</p></footer>
 
     <script>
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
@@ -268,98 +244,128 @@
         let cart = JSON.parse(localStorage.getItem('bananCart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('bananWishlist')) || [];
         let products = [];
-        let currentCategory = 'all';
+        
+        // متغيرات للفلترة الموحدة
+        let currentCategory = 'all'; 
+
         const container = document.getElementById('productsContainer');
         const filterContainer = document.getElementById('filterContainer');
 
-        // قاموس لترجمة أسماء الأقسام المعروفة (للحفاظ على التصميم الجميل)
-        const categoryLabels = {
-            'cheap': 'اقتصادي',
-            'medium': 'متوسط',
-            'premium': 'فاخر',
-            'all': 'الكل'
-        };
+        const categoryLabels = { 'cheap': 'اقتصادي', 'medium': 'متوسط', 'premium': 'فاخر', 'all': 'الكل' };
 
-        async function fetchProducts() {
-            try {
-                const response = await fetch(sheetURL);
-                const data = await response.text();
-                const rows = data.split('\n').slice(1);
-                
-                products = rows.map(row => {
-                    const col = row.split(',').map(cell => cell.replace(/["\r]/g, '').trim());
-                    if(col.length >= 5 && col[0] !== '') {
-                        return {
-                            id: col[0],
-                            name: col[1],
-                            price: Number(col[2]),
-                            category: col[3].toLowerCase(), // توحيد حالة الأحرف
-                            img: col[4],
-                            stock: col[5] && col[5] !== '' ? Number(col[5]) : 10,
-                            description: col[6] && col[6] !== '' ? col[6] : "منتج مميز من متجر بنان."
-                        };
-                    }
-                }).filter(p => p);
+        // === 1. استخدام مكتبة PapaParse لقراءة CSV بدقة (Fix CSV Issue) ===
+        function fetchProducts() {
+            Papa.parse(sheetURL, {
+                download: true,
+                header: false, // لأننا نعرف ترتيب الأعمدة يدوياً
+                complete: function(results) {
+                    const rows = results.data.slice(1); // تجاهل العنوان
+                    
+                    products = rows.map(col => {
+                        // التأكد من أن السطر يحتوي بيانات كافية
+                        if(col.length >= 5 && col[0]) {
+                            return {
+                                id: col[0].trim(),
+                                name: col[1].trim(),
+                                price: Number(col[2]),
+                                category: col[3].trim().toLowerCase(),
+                                img: col[4].trim(),
+                                stock: col[5] ? Number(col[5]) : 10,
+                                description: col[6] ? col[6].trim() : "وصف المنتج غير متوفر."
+                            };
+                        }
+                    }).filter(p => p);
 
-                generateDynamicButtons(); // توليد الأزرار بناءً على البيانات
-                renderProducts(products);
-            } catch (error) {
-                console.error("حدث خطأ:", error);
-                container.innerHTML = '<p style="text-align:center; padding:20px; color:red;">خطأ في قراءة البيانات</p>';
-            }
+                    generateDynamicButtons();
+                    applyFilters(); // تطبيق الفلترة لأول مرة
+                },
+                error: function(err) {
+                    console.error("CSV Error:", err);
+                    container.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في تحميل البيانات.</p>';
+                }
+            });
         }
 
-        // === دالة توليد الأزرار ديناميكياً ===
+        // === 2. نظام الفلترة الموحد (Fix Filter Logic) ===
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let filtered = products;
+
+            // 1. فلتر التصنيف
+            if (currentCategory === 'wishlist') {
+                filtered = filtered.filter(p => wishlist.includes(p.id));
+            } else if (currentCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === currentCategory);
+            }
+
+            // 2. فلتر البحث (يدمج مع التصنيف)
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) || 
+                    p.price.toString().includes(searchTerm)
+                );
+            }
+
+            renderProducts(filtered);
+        }
+
         function generateDynamicButtons() {
-            // استخراج كل التصنيفات الموجودة في المنتجات
             const categories = ['all', ...new Set(products.map(p => p.category))];
-            
-            filterContainer.innerHTML = ''; // مسح القديم
+            filterContainer.innerHTML = '';
             
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = `filter-btn ${cat === 'all' ? 'active' : ''}`;
-                // إذا الاسم موجود في القاموس نستخدم الترجمة، وإلا نستخدم الاسم كما هو في الشيت
                 btn.innerText = categoryLabels[cat] || cat; 
-                btn.onclick = () => filterByCategory(cat, btn);
+                btn.onclick = () => setCategory(cat, btn);
                 filterContainer.appendChild(btn);
             });
 
-            // زر المفضلة الثابت
             const favBtn = document.createElement('button');
             favBtn.className = 'filter-btn fav-btn';
             favBtn.innerHTML = '<i class="fas fa-heart"></i> المفضلة';
-            favBtn.onclick = () => filterByCategory('wishlist', favBtn);
+            favBtn.onclick = () => setCategory('wishlist', favBtn);
             filterContainer.appendChild(favBtn);
         }
 
+        // === 3. تحسين الأداء (Batch Rendering) ===
         function renderProducts(list) {
-            container.innerHTML = '';
             if(list.length === 0) {
                 container.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">لا توجد منتجات مطابقة 😕</p>';
                 return;
             }
 
-            list.forEach(p => {
+            // تجميع HTML في متغير واحد لتقليل عمليات الرسم (Reflow)
+            const htmlContent = list.map(p => {
                 const isSoldOut = p.stock <= 0;
-                let stockText = "";
-                if (!isSoldOut) {
-                    if (p.stock < 5) stockText = `<div style="color:#c0392b; font-size:0.85rem; margin-bottom:5px; font-weight:bold;">🔥 بقي ${p.stock} قطع</div>`;
-                    else stockText = `<div style="color:#27ae60; font-size:0.85rem; margin-bottom:5px;">✅ متوفر: ${p.stock}</div>`;
-                }
+                let stockHTML = '';
                 
-                // تحديد اسم البادج
+                if (!isSoldOut) {
+                    stockHTML = p.stock < 5 
+                        ? `<div style="color:var(--danger); font-size:0.85rem; font-weight:bold;">🔥 بقي ${p.stock} فقط</div>`
+                        : `<div style="color:var(--success); font-size:0.85rem;">✅ متوفر: ${p.stock}</div>`;
+                }
+
                 let badgeText = categoryLabels[p.category] || p.category;
                 let badgeClass = 'badge-default';
-                if (p.category === 'cheap') badgeClass = 'badge-cheap';
-                else if (p.category === 'medium') badgeClass = 'badge-medium';
-                else if (p.category === 'premium') badgeClass = 'badge-premium';
+                if(p.category === 'cheap') badgeClass = 'badge-cheap';
+                else if(p.category === 'medium') badgeClass = 'badge-medium';
+                else if(p.category === 'premium') badgeClass = 'badge-premium';
+                
                 if (isSoldOut) { badgeClass = 'badge-soldout'; badgeText = 'نفذت الكمية'; }
 
                 const isFav = wishlist.includes(p.id) ? 'active' : '';
                 const cardClass = isSoldOut ? 'product-card sold-out' : 'product-card';
+                // لاحظ: Sold out يمنع الضغط عبر CSS pointer-events، لكن نضيف فحص في JS للأمان
 
-                const html = `
+                return `
                     <div class="${cardClass}" onclick="openDetails('${p.id}')">
                         <span class="badge ${badgeClass}">${badgeText}</span>
                         <div class="wishlist-icon ${isFav}" onclick="event.stopPropagation(); toggleWishlist('${p.id}')">
@@ -368,18 +374,64 @@
                         <img src="${p.img}" class="product-img" loading="lazy" alt="${p.name}">
                         <div class="product-info">
                             <h3>${p.name}</h3>
-                            ${stockText}
+                            ${stockHTML}
                             <div class="price">${p.price} ₪</div>
-                            <button class="add-cart-btn" onclick="event.stopPropagation(); ${isSoldOut ? '' : `addToCart('${p.id}')`}" ${isSoldOut ? 'disabled' : ''}>
+                            <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')" ${isSoldOut ? 'disabled' : ''}>
                                 ${isSoldOut ? 'نفذت الكمية' : '<i class="fas fa-cart-plus"></i> أضف للسلة'}
                             </button>
                         </div>
                     </div>
                 `;
-                container.innerHTML += html;
-            });
+            }).join(''); // دمج المصفوفة في نص واحد
+
+            container.innerHTML = htmlContent;
         }
 
+        // === 4. منطق المخزون الصارم (Fix Stock Logic) ===
+        function addToCart(id) {
+            const product = products.find(p => p.id == id);
+            if(!product || product.stock <= 0) { showToast("عذراً، نفذت الكمية!"); return; }
+
+            const existing = cart.find(item => item.id == id);
+            
+            // فحص الكمية قبل الإضافة
+            if (existing) {
+                if (existing.qty + 1 > product.stock) {
+                    showToast(`⚠️ المتوفر فقط ${product.stock} قطع!`);
+                    return;
+                }
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            
+            saveCart();
+            showToast(`تمت إضافة ${product.name}`);
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id == id);
+            if (!item) return;
+
+            const product = products.find(p => p.id == id);
+            const maxStock = product ? product.stock : item.stock; // الحماية في حال لم يتم تحميل المنتجات
+
+            const newQty = item.qty + delta;
+
+            if (newQty > maxStock) {
+                showToast(`⚠️ لا يمكنك طلب أكثر من ${maxStock} قطع`);
+                return;
+            }
+
+            if (newQty <= 0) {
+                removeFromCart(id);
+            } else {
+                item.qty = newQty;
+                saveCart();
+            }
+        }
+
+        // === باقي الدوال المساعدة ===
         function openDetails(id) {
             const p = products.find(x => x.id == id);
             if(!p) return;
@@ -395,11 +447,12 @@
             badge.className = 'badge'; 
             if (p.stock <= 0) { badge.classList.add('badge-soldout'); badge.innerText = 'نفذت الكمية'; }
             else {
-                let badgeClass = 'badge-default';
-                if (p.category === 'cheap') badgeClass = 'badge-cheap';
-                else if (p.category === 'medium') badgeClass = 'badge-medium';
-                else if (p.category === 'premium') badgeClass = 'badge-premium';
-                badge.classList.add(badgeClass);
+                // تلوين البادج
+                let bClass = 'badge-default';
+                if(p.category === 'cheap') bClass = 'badge-cheap';
+                else if(p.category === 'medium') bClass = 'badge-medium';
+                else if(p.category === 'premium') bClass = 'badge-premium';
+                badge.classList.add(bClass);
                 badge.innerText = categoryLabels[p.category] || p.category;
             }
 
@@ -412,18 +465,16 @@
                 btn.disabled = true;
                 btn.onclick = null;
             } else {
-                stockDiv.innerHTML = p.stock < 5 ? `<span style="color:#c0392b;">🔥 بقي ${p.stock} قطع فقط!</span>` : `<span style="color:#27ae60;">✅ متوفر في المخزون</span>`;
+                stockDiv.innerHTML = p.stock < 5 ? `<span style="color:var(--danger);">🔥 بقي ${p.stock} قطع فقط!</span>` : `<span style="color:var(--success);">✅ متوفر بالمخزن</span>`;
                 btn.innerText = 'أضف للسلة';
                 btn.disabled = false;
                 btn.onclick = function() { addToCart(p.id); closeProductModal(); };
             }
 
-            // === اقتراح منتجات مشابهة ===
+            // اقتراحات مشابهة
             const relatedContainer = document.getElementById('relatedContainer');
             relatedContainer.innerHTML = '';
-            
-            // البحث عن منتجات من نفس الفئة (ليست المنتج الحالي)
-            const related = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 3); // خذ أول 3 فقط
+            const related = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 3);
             
             if (related.length > 0) {
                 related.forEach(r => {
@@ -432,8 +483,7 @@
                             <img src="${r.img}">
                             <h4>${r.name}</h4>
                             <div class="price" style="font-size:0.9rem;">${r.price} ₪</div>
-                        </div>
-                    `;
+                        </div>`;
                 });
                 document.querySelector('.related-section').style.display = 'block';
             } else {
@@ -443,35 +493,25 @@
             modal.style.display = 'flex';
         }
 
+        // زر ESC للإغلاق (Accessibility)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeProductModal();
+                closeModal('cartModal');
+                closeModal('checkoutModal');
+            }
+        });
+        
+        // إغلاق عند النقر خارج المودال
+        window.onclick = function(event) {
+            if (event.target.classList.contains('product-modal')) closeProductModal();
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
         function closeProductModal() { document.getElementById('productModal').style.display = 'none'; }
-
-        function filterByCategory(cat, btnElement) {
-            currentCategory = cat;
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            if(btnElement) btnElement.classList.add('active');
-            
-            if (cat === 'all') renderProducts(products);
-            else if (cat === 'wishlist') {
-                const favProducts = products.filter(p => wishlist.includes(p.id));
-                renderProducts(favProducts);
-            } else renderProducts(products.filter(p => p.category === cat));
-        }
-
-        function filterProducts() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.price.toString().includes(query));
-            renderProducts(filtered);
-        }
-
-        function addToCart(id) {
-            const product = products.find(p => p.id == id);
-            if(product.stock <= 0) { showToast("نفذت الكمية!"); return; }
-            const existing = cart.find(item => item.id == id);
-            if (existing) existing.qty++;
-            else cart.push({ ...product, qty: 1 });
-            saveCart();
-            showToast(`تمت إضافة ${product.name} للسلة`);
-        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function toggleWishlist(id) {
             if (wishlist.includes(id)) {
@@ -482,26 +522,19 @@
                 showToast("تمت الإضافة للمفضلة ❤️");
             }
             localStorage.setItem('bananWishlist', JSON.stringify(wishlist));
-            
-            const card = [...document.querySelectorAll('.product-card')].find(c => c.innerHTML.includes(`openDetails('${id}')`));
-            if(card) {
-                const icon = card.querySelector('.wishlist-icon');
-                if(icon) icon.classList.toggle('active');
-            }
-            if(currentCategory === 'wishlist') {
-                // تحديث العرض إذا كنا في صفحة المفضلة
-                const favBtn = document.querySelector('.filter-btn.fav-btn');
-                filterByCategory('wishlist', favBtn);
-            }
+            applyFilters(); // تحديث العرض فوراً
         }
 
         function saveCart() { localStorage.setItem('bananCart', JSON.stringify(cart)); updateCartUI(); }
+        function removeFromCart(id) { cart = cart.filter(item => item.id != id); saveCart(); }
+        
         function updateCartUI() {
             const count = cart.reduce((acc, item) => acc + item.qty, 0);
             document.getElementById('cartCount').innerText = count;
             const cartList = document.getElementById('cartItems');
             cartList.innerHTML = '';
             let total = 0;
+            
             if (cart.length === 0) {
                 cartList.innerHTML = '<p style="text-align:center; opacity:0.6; margin-top:20px;">السلة فارغة</p>';
                 document.getElementById('proceedBtn').style.display = 'none';
@@ -528,18 +561,9 @@
             }
             document.getElementById('cartTotal').innerText = total + ' ₪';
         }
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id == id);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) removeFromCart(id);
-                else saveCart();
-            }
-        }
-        function removeFromCart(id) { cart = cart.filter(item => item.id != id); saveCart(); }
+
         function openCartModal() { updateCartUI(); document.getElementById('cartModal').style.display = 'flex'; }
         function openCheckoutModal() { document.getElementById('cartModal').style.display = 'none'; document.getElementById('checkoutModal').style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
         function sendWhatsApp() {
             const name = document.getElementById('custName').value.trim();
@@ -581,6 +605,7 @@
             document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
         }
 
+        // بدء التشغيل
         fetchProducts();
         updateCartUI();
     </script>
