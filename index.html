@@ -7,7 +7,8 @@
     
     <meta property="og:title" content="BANAN Store - متجر بنان">
     <meta property="og:description" content="قهوتك، كما تحب أن تراها. تصفح أجمل المجات في فلسطين.">
-    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/2935/2935413.png"> <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/2935/2935413.png">
+    <meta property="og:url" content="https://basilcod.github.io/BANAN-Store/">
     <meta property="og:type" content="website">
 
     <title>BANAN Store - متجر بنان</title>
@@ -15,7 +16,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
@@ -44,9 +44,7 @@
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        /* تحسين الأداء: تحديد الخصائص بدلاً من all */
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color .3s, color .3s, transform .2s, box-shadow .2s; }
-        
         body { font-family: 'Cairo', sans-serif; background: var(--bg-gradient); color: var(--text); padding-bottom: 80px; min-height: 100vh; }
 
         header { background: rgba(111, 78, 55, 0.95); backdrop-filter: blur(10px); color: white; padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
@@ -75,7 +73,6 @@
         .filter-btn.fav-btn.active { background: var(--danger); border-color: var(--danger); }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
-        
         .product-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; position: relative; }
         .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--accent); }
         .product-card.sold-out .product-img { filter: grayscale(1); opacity: 0.8; }
@@ -92,7 +89,7 @@
         .wishlist-icon { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #bdc3c7; font-size: 1.2rem; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .wishlist-icon.active { color: var(--danger); }
 
-        /* ✅ إصلاح: إضافة ألوان البادج الناقصة */
+        /* Badges */
         .badge { position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 30px; color: white; font-size: 0.8rem; font-weight: bold; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .badge-cheap { background-color: var(--success); }
         .badge-medium { background-color: #f39c12; }
@@ -100,7 +97,7 @@
         .badge-soldout { background-color: #7f8c8d; }
         .badge-default { background-color: var(--primary); }
 
-        /* Modal Styles */
+        /* Modals */
         .product-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 20px; }
         .product-modal-content { background: var(--glass-bg); width: 100%; max-width: 900px; border-radius: 25px; display: flex; flex-direction: column; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: zoomIn 0.3s; position: relative; }
         @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -115,8 +112,6 @@
         .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; }
         .related-card { background: white; border-radius: 15px; padding: 10px; text-align: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .related-card img { width: 100%; height: 100px; object-fit: cover; border-radius: 10px; }
-
-        @media (max-width: 768px) { .pm-main { flex-direction: column; } .pm-image { height: 250px; flex: none; } }
 
         .cart-float { position: fixed; bottom: 30px; left: 30px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 26px; cursor: pointer; box-shadow: 0 10px 25px rgba(111, 78, 55, 0.4); z-index: 1000; animation: pulse 3s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(111, 78, 55, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(111, 78, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(111, 78, 55, 0); } }
@@ -140,7 +135,7 @@
     <div id="toast" class="toast"><i class="fas fa-check-circle" style="color: #2ecc71;"></i> <span id="toastText">تمت العملية بنجاح</span></div>
 
     <header>
-        <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-adjust" id="themeIcon"></i></button>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي"><i class="fas fa-adjust" id="themeIcon"></i></button>
         <h1>☕ BANAN Store</h1>
     </header>
 
@@ -155,7 +150,7 @@
     <div class="container">
         <div class="controls-area">
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن مج..." onkeyup="applyFilters()">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 ابحث عن مج...">
             </div>
             
             <div class="sort-filter-container">
@@ -177,14 +172,14 @@
         </div>
     </div>
 
-    <div class="cart-float" onclick="openCartModal()">
+    <div class="cart-float" onclick="openCartModal()" aria-label="عرض السلة" role="button" tabindex="0">
         <i class="fas fa-shopping-cart"></i>
         <span class="cart-count" id="cartCount">0</span>
     </div>
 
     <div class="product-modal" id="productModal">
         <div class="product-modal-content">
-            <span class="pm-close" onclick="closeProductModal()">&times;</span>
+            <span class="pm-close" onclick="closeProductModal()" aria-label="إغلاق">&times;</span>
             <div class="pm-main">
                 <div class="pm-image"><img id="pmImg" src=""></div>
                 <div class="pm-details">
@@ -193,7 +188,11 @@
                     <div id="pmStockText" style="margin-bottom:15px;"></div>
                     <p id="pmDesc" style="color:var(--text-muted); line-height:1.8; margin-bottom:20px;"></p>
                     <div id="pmPrice" style="font-size:2.2rem; color:var(--text); font-weight:bold; margin-bottom:25px;"></div>
+                    
                     <button id="pmBtn" class="add-cart-btn">أضف للسلة</button>
+                    <button id="pmBuyNow" class="checkout-btn" style="margin-top:10px; background:#25D366;">
+                        <i class="fab fa-whatsapp"></i> اطلب هذا المنتج الآن
+                    </button>
                 </div>
             </div>
             <div class="related-section">
@@ -233,28 +232,40 @@
     <script>
         const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
 
+        // === 4. Persistence (استرجاع الحالة) ===
         let cart = JSON.parse(localStorage.getItem('bananCart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('bananWishlist')) || [];
         let products = [];
-        let currentCategory = 'all'; 
+        
+        // استعادة الفلاتر
+        let currentCategory = localStorage.getItem('bananCategory') || 'all'; 
+        document.getElementById('searchInput').value = localStorage.getItem('bananSearch') || '';
+        document.getElementById('sortSelect').value = localStorage.getItem('bananSort') || 'default';
+        document.getElementById('stockCheckbox').checked = (localStorage.getItem('bananStockOnly') === '1');
 
         const container = document.getElementById('productsContainer');
         const filterContainer = document.getElementById('filterContainer');
         const categoryLabels = { 'cheap': 'اقتصادي', 'medium': 'متوسط', 'premium': 'فاخر', 'all': 'الكل' };
 
-        // ✅ وظيفة الأمان: تنظيف النصوص من أي كود HTML
+        // === 1. Security: JS Injection Fix ===
+        function jsStr(s) {
+            return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        // === 4. Security: HTML Injection Fix ===
         function escapeHTML(str) {
             if (!str) return "";
             return String(str).replace(/[&<>"']/g, function(m) {
-                return {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#39;'
-                }[m];
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
             });
         }
+
+        // === 2. Performance: Debounce ===
+        let debounceTimer;
+        document.getElementById('searchInput').addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(applyFilters, 300); // تأخير 300ms
+        });
 
         function fetchProducts() {
             Papa.parse(sheetURL, {
@@ -262,11 +273,10 @@
                 header: false,
                 complete: function(results) {
                     const rows = results.data.slice(1);
-                    // ✅ إضافة originalOrder لحل مشكلة الفرز الافتراضي
-                    products = rows.map((col, index) => {
+                    products = rows.map((col, idx) => {
                         if(col.length >= 5 && col[0]) {
                             return {
-                                originalOrder: index, // حفظ الترتيب الأصلي
+                                originalOrder: idx, // لحفظ الترتيب
                                 id: col[0].trim(),
                                 name: col[1].trim(),
                                 price: Number(col[2]),
@@ -289,28 +299,25 @@
             });
         }
 
-        // ✅ إصلاح مزامنة السلة (يحذف المنتجات المحذوفة ويضبط الكميات)
+        // === 3. Logic: Better Cart Sync ===
         function syncCartWithLatestData() {
             const beforeLen = cart.length;
             let changed = false;
 
             cart = cart.map(item => {
                 const p = products.find(x => x.id === item.id);
-                // إذا المنتج انحذف من الشيت، نرجعه null ليتم فلترته لاحقاً
-                if (!p) { changed = true; return null; }
+                // حذف المنتج إذا اختفى من الشيت أو نفد مخزونه
+                if (!p || (p.stock || 0) <= 0) { changed = true; return null; }
 
-                // التأكد أن الكمية لا تتجاوز المخزون الجديد
+                // تعديل الكمية إذا تجاوزت المخزون
                 const newQty = Math.min(item.qty, p.stock || 0);
                 if (newQty !== item.qty) changed = true;
 
-                // إذا المخزون أصبح 0، نحذف المنتج من السلة (خيار أفضل)
-                if ((p.stock || 0) <= 0) { changed = true; return null; }
-
-                // تحديث بيانات السعر والاسم والصورة دائماً
+                // تحديث البيانات
                 if (item.price !== p.price || item.name !== p.name || item.img !== p.img) changed = true;
                 
                 return { ...p, qty: newQty };
-            }).filter(Boolean); // حذف الـ null
+            }).filter(Boolean);
 
             if (beforeLen !== cart.length) changed = true;
             if (changed) saveCart();
@@ -322,7 +329,8 @@
             
             categories.forEach(cat => {
                 const btn = document.createElement('button');
-                btn.className = `filter-btn ${cat === 'all' ? 'active' : ''}`;
+                // Persistence: تحديد الزر النشط بناءً على الذاكرة
+                btn.className = `filter-btn ${cat === currentCategory ? 'active' : ''}`;
                 btn.innerText = categoryLabels[cat] || cat; 
                 btn.onclick = () => setCategory(cat, btn);
                 filterContainer.appendChild(btn);
@@ -330,7 +338,7 @@
 
             const favBtn = document.createElement('button');
             favBtn.id = 'favBtn';
-            favBtn.className = 'filter-btn fav-btn';
+            favBtn.className = `filter-btn fav-btn ${currentCategory === 'wishlist' ? 'active' : ''}`;
             favBtn.innerHTML = `<i class="fas fa-heart"></i> المفضلة (${wishlist.length})`;
             favBtn.onclick = () => setCategory('wishlist', favBtn);
             filterContainer.appendChild(favBtn);
@@ -338,14 +346,21 @@
 
         function setCategory(cat, btn) {
             currentCategory = cat;
+            // حفظ الفلتر
+            localStorage.setItem('bananCategory', currentCategory);
+            
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if(btn) btn.classList.add('active');
             applyFilters();
         }
 
         function applyFilters() {
-            // ✅ استخدام نسخة من المصفوفة لتجنب تعديل الأصل
-            let filtered = [...products];
+            // حفظ خيارات البحث والفرز
+            localStorage.setItem('bananSearch', document.getElementById('searchInput').value);
+            localStorage.setItem('bananSort', document.getElementById('sortSelect').value);
+            localStorage.setItem('bananStockOnly', document.getElementById('stockCheckbox').checked ? '1' : '0');
+
+            let filtered = [...products]; // نسخ المصفوفة
 
             if (currentCategory === 'wishlist') {
                 filtered = filtered.filter(p => wishlist.includes(p.id));
@@ -361,21 +376,14 @@
                 );
             }
 
-            const showAvailableOnly = document.getElementById('stockCheckbox').checked;
-            if (showAvailableOnly) {
+            if (document.getElementById('stockCheckbox').checked) {
                 filtered = filtered.filter(p => p.stock > 0);
             }
 
-            // ✅ الفرز الآمن باستخدام النسخة
             const sortValue = document.getElementById('sortSelect').value;
-            if (sortValue === 'low-high') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (sortValue === 'high-low') {
-                filtered.sort((a, b) => b.price - a.price);
-            } else {
-                // العودة للترتيب الأصلي
-                filtered.sort((a, b) => a.originalOrder - b.originalOrder);
-            }
+            if (sortValue === 'low-high') filtered.sort((a, b) => a.price - b.price);
+            else if (sortValue === 'high-low') filtered.sort((a, b) => b.price - a.price);
+            else filtered.sort((a, b) => a.originalOrder - b.originalOrder); // الترتيب الأصلي
 
             renderProducts(filtered);
         }
@@ -406,21 +414,24 @@
 
                 const isFav = wishlist.includes(p.id) ? 'active' : '';
                 const cardClass = isSoldOut ? 'product-card sold-out' : 'product-card';
-                // ✅ استخدام escapeHTML للأمان
                 const safeName = escapeHTML(p.name);
+                // استخدام jsStr للـ ID
+                const safeId = jsStr(p.id);
 
                 return `
-                    <div class="${cardClass}" onclick="openDetails('${p.id}')">
+                    <div class="${cardClass}" onclick="openDetails('${safeId}')">
                         <span class="badge ${badgeClass}">${badgeText}</span>
-                        <div class="wishlist-icon ${isFav}" onclick="event.stopPropagation(); toggleWishlist('${p.id}')">
+                        <div class="wishlist-icon ${isFav}" aria-label="إضافة للمفضلة" role="button" tabindex="0" onclick="event.stopPropagation(); toggleWishlist('${safeId}')">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <img src="${p.img}" class="product-img" loading="lazy" alt="${safeName}">
+                        <img src="${p.img}" class="product-img" loading="lazy" alt="${safeName}" 
+                             onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=BANAN+Store';">
+                        
                         <div class="product-info">
                             <h3>${safeName}</h3>
                             ${stockHTML}
                             <div class="price">${p.price} ₪</div>
-                            <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')" ${isSoldOut ? 'disabled' : ''}>
+                            <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart('${safeId}')" ${isSoldOut ? 'disabled' : ''}>
                                 ${isSoldOut ? 'نفذت الكمية' : 'أضف للسلة'}
                             </button>
                         </div>
@@ -441,8 +452,15 @@
             }
             localStorage.setItem('bananWishlist', JSON.stringify(wishlist));
             const btn = document.getElementById('favBtn');
-            if(btn) btn.innerHTML = `<i class="fas fa-heart"></i> المفضلة (${wishlist.length})`;
-            applyFilters();
+            if(btn) {
+                btn.innerHTML = `<i class="fas fa-heart"></i> المفضلة (${wishlist.length})`;
+                if(currentCategory === 'wishlist') btn.classList.add('active');
+            }
+            if(currentCategory === 'wishlist') applyFilters();
+            else {
+                 // تحديث أيقونة القلب في الكارد الحالي بدون إعادة رسم كاملة (اختياري، لكن renderProducts يعالجها)
+                 applyFilters();
+            }
         }
 
         function addToCart(id) {
@@ -493,20 +511,20 @@
                 document.getElementById('proceedBtn').style.display = 'block';
                 cart.forEach(item => {
                     total += item.price * item.qty;
-                    // ✅ استخدام escapeHTML في السلة أيضاً
                     const safeName = escapeHTML(item.name);
+                    const safeId = jsStr(item.id);
                     cartList.innerHTML += `
                         <div class="cart-item">
-                            <img src="${item.img}">
+                            <img src="${item.img}" onerror="this.src='https://via.placeholder.com/100'">
                             <div class="item-details" style="margin-right:10px;">
                                 <h4 style="font-size:0.9rem;">${safeName}</h4>
                                 <div style="color:var(--primary); font-weight:bold;">${item.price} ₪</div>
                             </div>
                             <div class="item-controls">
-                                <button onclick="changeQty('${item.id}', -1)">-</button>
+                                <button onclick="changeQty('${safeId}', -1)">-</button>
                                 <span style="margin:0 10px">${item.qty}</span>
-                                <button onclick="changeQty('${item.id}', 1)">+</button>
-                                <button onclick="removeFromCart('${item.id}')" style="color:#e74c3c; border-color:#e74c3c; margin-right:5px;"><i class="fas fa-trash"></i></button>
+                                <button onclick="changeQty('${safeId}', 1)">+</button>
+                                <button onclick="removeFromCart('${safeId}')" style="color:#e74c3c; border-color:#e74c3c; margin-right:5px;"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>`;
                 });
@@ -519,10 +537,10 @@
             if(!p) return;
 
             const modal = document.getElementById('productModal');
-            // ✅ استخدام escapeHTML في التفاصيل
             document.getElementById('pmImg').src = p.img;
-            document.getElementById('pmName').innerText = escapeHTML(p.name);
-            document.getElementById('pmDesc').innerText = escapeHTML(p.description);
+            document.getElementById('pmImg').onerror = function() { this.src='https://via.placeholder.com/600x400?text=BANAN+Store'; };
+            document.getElementById('pmName').innerText = p.name; // innerText آمن
+            document.getElementById('pmDesc').innerText = p.description;
             document.getElementById('pmPrice').innerText = p.price + ' ₪';
             
             const badge = document.getElementById('pmBadge');
@@ -536,6 +554,7 @@
             badge.innerText = p.stock <= 0 ? 'نفذت الكمية' : (categoryLabels[p.category] || p.category);
 
             const btn = document.getElementById('pmBtn');
+            const btnBuyNow = document.getElementById('pmBuyNow');
             const stockDiv = document.getElementById('pmStockText');
             
             if (p.stock <= 0) {
@@ -543,11 +562,23 @@
                 btn.innerText = 'نفذت الكمية 🚫';
                 btn.disabled = true;
                 btn.onclick = null;
+                btnBuyNow.style.display = 'none'; // إخفاء زر الشراء السريع
             } else {
                 stockDiv.innerHTML = p.stock < 5 ? `<span style="color:#e74c3c;">🔥 بقي ${p.stock} قطع فقط!</span>` : `<span style="color:#27ae60;">✅ متوفر بالمخزن</span>`;
                 btn.innerText = 'أضف للسلة';
                 btn.disabled = false;
                 btn.onclick = function() { addToCart(p.id); closeProductModal(); };
+                
+                // === 6. Quick Buy Feature ===
+                btnBuyNow.style.display = 'block';
+                btnBuyNow.onclick = function() {
+                    // استبدال السلة الحالية بهذا المنتج فقط (أو إضافته والذهاب للدفع)
+                    // هنا سنقوم بإضافته وحيداً لسرعة الطلب كما طلبت
+                    cart = [{ ...p, qty: 1 }];
+                    saveCart();
+                    closeProductModal();
+                    openCheckoutModal();
+                };
             }
 
             const relatedContainer = document.getElementById('relatedContainer');
@@ -555,9 +586,10 @@
             const related = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 3);
             if (related.length > 0) {
                 related.forEach(r => {
+                    const safeRId = jsStr(r.id);
                     relatedContainer.innerHTML += `
-                        <div class="related-card" onclick="openDetails('${r.id}')">
-                            <img src="${r.img}">
+                        <div class="related-card" onclick="openDetails('${safeRId}')">
+                            <img src="${r.img}" onerror="this.src='https://via.placeholder.com/100'">
                             <h4 style="font-size:0.9rem;">${escapeHTML(r.name)}</h4>
                             <div style="font-weight:bold; color:var(--primary);">${r.price} ₪</div>
                         </div>`;
@@ -577,7 +609,6 @@
         function openCheckoutModal() { document.getElementById('cartModal').style.display = 'none'; document.getElementById('checkoutModal').style.display = 'flex'; }
 
         function sendWhatsApp() {
-            // ✅ تحقق من أن السلة ليست فارغة
             if(cart.length === 0){ showToast("السلة فارغة!"); return; }
 
             const name = document.getElementById('custName').value.trim();
@@ -601,7 +632,7 @@
             const url = `https://wa.me/972569541101?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank');
 
-            // ✅ تفريغ السلة بعد الطلب (تجربة مستخدم أفضل)
+            // تفريغ السلة بعد الطلب
             cart = [];
             saveCart();
             closeModal('checkoutModal');
