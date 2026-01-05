@@ -32,6 +32,14 @@
             --success: #388E3C;
             --danger: #D32F2F;
             --shadow: 0 8px 32px 0 rgba(62, 39, 35, 0.1);
+
+            /* ✅ ألوان “شكل الدفع” الجديد */
+            --pay-surface: rgba(18, 18, 18, 0.94);
+            --pay-border: rgba(255, 255, 255, 0.10);
+            --pay-field: rgba(255, 255, 255, 0.08);
+            --pay-field-border: rgba(255, 255, 255, 0.12);
+            --pay-text: rgba(255, 255, 255, 0.92);
+            --pay-muted: rgba(255, 255, 255, 0.55);
         }
 
         [data-theme="dark"] {
@@ -43,6 +51,14 @@
             --text: #efebe9;
             --text-muted: #bcaaa4;
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+            /* ✅ أغمق شوي بالدّارك */
+            --pay-surface: rgba(12, 12, 12, 0.96);
+            --pay-border: rgba(255, 255, 255, 0.10);
+            --pay-field: rgba(255, 255, 255, 0.08);
+            --pay-field-border: rgba(255, 255, 255, 0.12);
+            --pay-text: rgba(255, 255, 255, 0.95);
+            --pay-muted: rgba(255, 255, 255, 0.58);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color .3s, color .3s, transform .2s, box-shadow .2s; }
@@ -60,7 +76,6 @@
 
         /* === Hero Section الجديد (صورة مجات على رفوف) === */
         .hero-section {
-            /* صورة مشابهة جداً للصورة التي طلبتها (رفوف مجات) */
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1596080277259-24b423cb0235?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover; 
             background-position: center; 
@@ -84,7 +99,7 @@
             width: 100%; padding: 18px 30px; border-radius: 50px; border: none; 
             font-size: 1.1rem; font-family: 'Cairo', sans-serif; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); outline: none; 
-            background: #2b2b2b; color: #fff; /* خلفية داكنة للبحث مثل الصورة */
+            background: #2b2b2b; color: #fff;
             backdrop-filter: blur(15px); text-align: center;
         }
         .search-input::placeholder { color: #ccc; }
@@ -161,6 +176,72 @@
         .social-links a.ig:hover { background: #E4405F; border-color: #E4405F; }
 
         @media (max-width: 700px) { .pm-main { flex-direction: column; } .pm-image { height: 250px; flex: none; } .hero-section { height: 300px; } .hero-content h1 { font-size: 2rem; } }
+
+        /* =========================================================
+           ✅✅✅ شكل الدفع الجديد — بدون تغيير أي وظيفة
+           بس ستايل checkoutModal صار زي نموذج الدفع بالصورة
+        ========================================================= */
+        #checkoutModal .modal-content{
+            background: var(--pay-surface) !important;
+            color: var(--pay-text) !important;
+            border: 1px solid var(--pay-border) !important;
+            border-radius: 30px !important;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.55) !important;
+            backdrop-filter: blur(18px);
+        }
+
+        #checkoutModal h3{
+            color: var(--pay-text);
+            letter-spacing: 0.2px;
+        }
+
+        #checkoutModal .form-group label{
+            color: var(--pay-text);
+            opacity: 0.9;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        #checkoutModal .form-group input{
+            background: var(--pay-field) !important;
+            border: 1px solid var(--pay-field-border) !important;
+            color: var(--pay-text) !important;
+            border-radius: 22px !important;
+            padding: 18px 18px !important;
+            font-size: 1.05rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        #checkoutModal .form-group input::placeholder{
+            color: var(--pay-muted) !important;
+        }
+
+        #checkoutModal .close-modal{
+            background: rgba(255,255,255,0.10);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            user-select: none;
+        }
+        #checkoutModal .close-modal:hover{
+            background: rgba(255,255,255,0.16);
+        }
+
+        #checkoutModal .checkout-btn{
+            background: #25D366 !important;
+            color: #081b0e !important;
+            border-radius: 22px !important;
+            padding: 16px !important;
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.25) !important;
+        }
+        #checkoutModal .checkout-btn:hover{
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 18px 38px rgba(37, 211, 102, 0.28) !important;
+        }
     </style>
 </head>
 <body>
@@ -439,8 +520,8 @@
             if(wishlist.includes(id)) wishlist = wishlist.filter(x => x !== id);
             else wishlist.push(id);
             localStorage.setItem('bananWishlist', JSON.stringify(wishlist));
-            generateDynamicButtons(); // لتحديث الرقم
-            applyFilters(); // لتحديث الأيقونات
+            generateDynamicButtons();
+            applyFilters();
             showToast(wishlist.includes(id) ? 'تمت الإضافة للمفضلة' : 'تم الحذف من المفضلة');
         }
 
@@ -527,7 +608,6 @@
             document.getElementById('pmBadge').innerText = categoryLabels[p.category] || p.category;
             document.getElementById('pmBadge').className = `badge badge-${p.category}`; 
             
-            // Share Button
             document.getElementById('pmShare').onclick = () => {
                 const shareData = { title: `Banan Store - ${p.name}`, text: `شوف هالمج الحلو: ${p.name}`, url: window.location.href };
                 if(navigator.share) navigator.share(shareData);
@@ -558,7 +638,6 @@
             
             if(!name || !city) return showToast('الرجاء تعبئة الاسم والعنوان');
             
-            // إنشاء رقم طلب مميز
             const orderId = "ORD-" + Math.floor(Math.random() * 10000);
             
             let msg = `*طلب جديد ${orderId}*\n👤 ${name}\n📍 ${city}\n📞 ${phone}\n\n`;
@@ -568,13 +647,9 @@
             const total = document.getElementById('cartTotal').innerText;
             msg += `\n*المجموع: ${total}*`;
             
-            // فتح واتساب فوراً
             window.open(`https://wa.me/972569541101?text=${encodeURIComponent(msg)}`, '_blank');
-            
-            // إظهار تنبيه
             showToast('تم إرسال الطلب!');
 
-            // محاولة الحفظ في السيرفر (بدون تعطيل المستخدم)
             fetch(ORDERS_API, {
                 method: "POST",
                 mode: "no-cors",
@@ -592,7 +667,6 @@
                 })
             }).catch(e => console.log('Saved to WA only', e));
 
-            // تنظيف
             cart = []; 
             appliedCoupon = null;
             saveCart(); 
@@ -627,7 +701,6 @@
         document.getElementById('sortSelect').addEventListener('change', applyFilters);
         document.getElementById('stockCheckbox').addEventListener('change', applyFilters);
 
-        // Keyboard support for cart
         const cartFloat = document.querySelector('.cart-float');
         if(cartFloat) {
             cartFloat.addEventListener('keydown', (e) => {
@@ -635,7 +708,6 @@
             });
         }
 
-        // Start
         fetchProducts();
     </script>
 </body>
