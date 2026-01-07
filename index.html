@@ -608,6 +608,30 @@
             document.getElementById('pmBadge').innerText = categoryLabels[p.category] || p.category;
             document.getElementById('pmBadge').className = `badge badge-${p.category}`; 
             
+            // --- ✅ بداية الكود الجديد: عرض منتجات مشابهة ---
+            const relatedContainer = document.getElementById('relatedContainer');
+            relatedContainer.innerHTML = ''; // تنظيف القديم
+
+            // نجلب منتجات من نفس الفئة، ونستثني المنتج الحالي، ونأخذ أول 3 فقط
+            const related = products
+                .filter(item => item.category === p.category && item.id !== p.id)
+                .slice(0, 3);
+
+            if (related.length > 0) {
+                related.forEach(r => {
+                    relatedContainer.innerHTML += `
+                        <div class="related-card" onclick="openDetails('${jsStr(r.id)}')">
+                            <img src="${r.img}" onerror="this.src='https://via.placeholder.com/100'">
+                            <div style="margin-top:5px; font-weight:bold; font-size:0.9rem;">${escapeHTML(r.name)}</div>
+                            <div style="color:var(--primary); font-size:0.85rem;">${r.price} ₪</div>
+                        </div>
+                    `;
+                });
+            } else {
+                relatedContainer.innerHTML = '<p style="color:#999; font-size:0.9rem;">لا توجد منتجات مشابهة حالياً.</p>';
+            }
+            // --- 🏁 نهاية الكود الجديد ---
+
             document.getElementById('pmShare').onclick = () => {
                 const shareData = { title: `Banan Store - ${p.name}`, text: `شوف هالمج الحلو: ${p.name}`, url: window.location.href };
                 if(navigator.share) navigator.share(shareData);
