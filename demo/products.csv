@@ -1,0 +1,4 @@
+id,name,price,category,image,stock,description
+demo-1,مج الصباح,25,cheap,mugs/jpeg (1).jpeg,8,منتج نموذجي للعرض فقط
+demo-2,مج القهوة,35,medium,mugs/jpeg (2).jpeg,5,منتج نموذجي للعرض فقط
+demo-3,مج فاخر,60,premium,mugs/jpeg (3).jpeg,0,مثال على منتج غير متوفر

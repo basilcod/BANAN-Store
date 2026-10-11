@@ -401,16 +401,24 @@
   </footer>
 
   <script>
+    const DEMO_MODE = new URLSearchParams(location.search).get('demo') === '1';
+    if (DEMO_MODE) {
+      const notice = document.createElement('div');
+      notice.setAttribute('role', 'status');
+      notice.textContent = 'وضع تجريبي — بيانات نموذجية، إرسال الطلبات معطّل';
+      notice.style.cssText = 'background:#fff3cd;color:#513d00;padding:12px;text-align:center;font-weight:bold;position:relative;z-index:1001';
+      document.body.prepend(notice);
+    }
     /************ CONFIG (CHANGE THESE) ************/
-    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
+    const sheetURL = DEMO_MODE ? "demo/products.csv" : "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTUSTfLcwoNHcgbqp6Eoe2jb6o490B6s8JaTV2wLAPZzoL635YbRdVEI81GbLInCCRP_1M8GzSLTpf/pub?gid=0&single=true&output=csv";
     const ORDERS_API = "https://script.google.com/macros/s/AKfycbwzESXWrDLel6cSq6jBPd2ySQSgBNI2Z8w8tPfR3qE9Tz-iIehnGRTaQy1j9J6yaQVC/exec";
     const WHATSAPP_NUMBER = "972569541101"; // بدون +
 
     /************ STATE ************/
-    let cart = JSON.parse(localStorage.getItem('bananCart')) || [];
-    let wishlist = JSON.parse(localStorage.getItem('bananWishlist')) || [];
+    let cart = JSON.parse(localStorage.getItem((DEMO_MODE ? 'bananCartDemo' : 'bananCart'))) || [];
+    let wishlist = JSON.parse(localStorage.getItem((DEMO_MODE ? 'bananWishlistDemo' : 'bananWishlist'))) || [];
     let products = [];
-    let currentCategory = localStorage.getItem('bananCategory') || 'all';
+    let currentCategory = localStorage.getItem((DEMO_MODE ? 'bananCategoryDemo' : 'bananCategory')) || 'all';
     let appliedCoupon = null;
     let debounceTimer = null;
 
@@ -427,13 +435,13 @@
 
     /************ HELPERS ************/
     function jsStr(s) {
-      return String(s)
+      return escapeAttr(String(s)
         .replace(/\\/g, '\\\\')
         .replace(/'/g, "\\'")
         .replace(/\n/g, "\\n")
         .replace(/\r/g, "\\r")
         .replace(/\u2028/g, "\\u2028")
-        .replace(/\u2029/g, "\\u2029");
+        .replace(/\u2029/g, "\\u2029"));
     }
 
     function escapeHTML(str) {
@@ -538,7 +546,7 @@
         const btn = document.createElement('button');
         btn.className = `filter-btn ${cat === currentCategory ? 'active' : ''}`;
         btn.innerText = categoryLabels[cat] || cat;
-        btn.onclick = () => { currentCategory = cat; localStorage.setItem('bananCategory', cat); applyFilters(); };
+        btn.onclick = () => { currentCategory = cat; localStorage.setItem((DEMO_MODE ? 'bananCategoryDemo' : 'bananCategory'), cat); applyFilters(); };
         filterContainer.appendChild(btn);
       });
       const favBtn = document.createElement('button');
@@ -622,13 +630,13 @@
     function toggleWishlist(id) {
       if(wishlist.includes(id)) wishlist = wishlist.filter(x => x !== id);
       else wishlist.push(id);
-      localStorage.setItem('bananWishlist', JSON.stringify(wishlist));
+      localStorage.setItem((DEMO_MODE ? 'bananWishlistDemo' : 'bananWishlist'), JSON.stringify(wishlist));
       generateDynamicButtons();
       applyFilters();
       showToast(wishlist.includes(id) ? 'تمت الإضافة للمفضلة' : 'تم الحذف من المفضلة');
     }
 
-    function saveCart() { localStorage.setItem('bananCart', JSON.stringify(cart)); updateCartUI(); }
+    function saveCart() { localStorage.setItem((DEMO_MODE ? 'bananCartDemo' : 'bananCart'), JSON.stringify(cart)); updateCartUI(); }
 
     function updateCartUI() {
       const count = cart.reduce((a,b) => a + b.qty, 0);
@@ -766,6 +774,7 @@
 
     /************ WHATSAPP + SAVE ORDER ************/
     function sendWhatsApp() {
+      if (DEMO_MODE) return showToast("وضع تجريبي: لم يتم إرسال أي طلب.");
       if(cart.length === 0) return showToast('السلة فارغة');
 
       const name = document.getElementById('custName').value.trim();
